@@ -21,6 +21,8 @@ namespace CRM_Nomenclatyre.Servises
     enum SQL_PROC
     {
         GET_MANAGER,
+        ADD_USER,
+        GET_USER,
     }
 
     public static class SqlService
@@ -36,8 +38,8 @@ namespace CRM_Nomenclatyre.Servises
                 {
                     List<Users> result = new List<Users>();
                     conn.Open();
-                    string comand = $"Select * From {TAB_NAME.tab_Users.ToString()}";
-                    SqlDataAdapter adapter = new SqlDataAdapter(comand, conn);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(SQL_PROC.GET_USER.ToString(), conn);
                     SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
                     DataSet ds_tab = new DataSet();
                     //Заполняем
@@ -50,14 +52,42 @@ namespace CRM_Nomenclatyre.Servises
                         result.Add(new Users
                         {
                             Id = Convert.ToInt32(item[0]),
-                            Login = item[1].ToString(),
-                            Password = item[2].ToString(),
+                            Login = item["Login"].ToString(),
+                            Password = item["Password"].ToString(),
+                            //Проверяем, что у пользователя нет менеджера
+                            Manager = item["UserId"] == DBNull.Value ? null : new Managers
+                            {
+                                UserId = Convert.ToInt32(item["UserId"]),
+                                FirstName = item["FirstName"].ToString(),
+                                LastName = item["LastName"].ToString()
+                            }
                         });
                     }
                     return result;
                 }
             }
 
+            public static bool AddTab_On(Users user)
+            {
+                using (SqlConnection con= new SqlConnection(connect))
+                {
+                    int result = 0;
+                    con.Open();
+                    SqlCommand cmd=new SqlCommand(SQL_PROC.ADD_USER.ToString(), con);
+                    cmd.CommandType= CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Login",user.Login);
+                    cmd.Parameters.AddWithValue("@Password", user.Password);
+                    cmd.Parameters.AddWithValue("@FirstName", user.Manager.FirstName);
+                    cmd.Parameters.AddWithValue("@LastName", user.Manager.LastName);
+
+                    SqlParameter outPar=cmd.Parameters.Add("@Id",SqlDbType.Int);
+                    outPar.Direction = ParameterDirection.Output;
+
+                    result = cmd.ExecuteNonQuery();
+
+                    return (result > 0) ? true : false;
+                }
+            }
         }
         public static class SQL_Manager
         {
@@ -115,6 +145,7 @@ namespace CRM_Nomenclatyre.Servises
                             UserId = Convert.ToInt32(item[0]),
                             FirstName = item[1].ToString(),
                             LastName = item[2].ToString(),
+
                         };
                     }
                     return result;

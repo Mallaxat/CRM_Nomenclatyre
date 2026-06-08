@@ -45,16 +45,36 @@ namespace Test
         static void Main(string[] args)
         {
 
-            CreateBD();
-/*            Users userbuf=new Users();
-            Users userbuf2 =new Users();
-            userbuf2.Login = "1";
-            userbuf2.Password = "1";
+            //CreateBD();
+            /*            Users userbuf=new Users();
+                        Users userbuf2 =new Users();
+                        userbuf2.Login = "1";
+                        userbuf2.Password = "1";
 
-            bool result = Logging.IsLogin(userbuf2,out userbuf);
-            Console.WriteLine(result);
-*/
+                        bool result = Logging.IsLogin(userbuf2,out userbuf);
+                        Console.WriteLine(result);
+            */
+            Managers man = new Managers
+            {
+                FirstName ="Petr",
+                LastName = "Petr",
+            };
 
+            Users user = new Users
+            {
+                Login = "2",
+                Password="2",
+                Manager = man
+            };
+
+            SqlService.SQL_User.AddTab_On(user);
+
+            List<Users> list = new List<Users>();
+            list = SqlService.SQL_User.GetTab_Of();
+            foreach(var i in list)
+            {
+                Console.WriteLine($"{i.Id} {i.Login} {i.Manager.LastName}");
+            }
 
         }
     }

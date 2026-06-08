@@ -47,10 +47,21 @@ namespace CRM_Nomenclatyre.Servises
             resultUser = null;
             return false;
         }
-        public bool Regist(Users user)
+        public bool IsLogin(Users user)
         {
-            //Подключенный режим
-            return false;
+            if (List_users == null) return false;
+
+            foreach (var item in List_users)
+            {
+                if (item.Login == user.Login) 
+                    return false;
+            }
+            return true;
+        }
+        public  bool Regist(Users user)
+        {
+            List_users.Add(user);
+            return SqlService.SQL_User.AddTab_On(user);
 
         }
 

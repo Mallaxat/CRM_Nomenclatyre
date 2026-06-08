@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CRM_Nomenclatyre.Models;
+using CRM_Nomenclatyre.Servises;
+using CRM_Nomenclatyre.Windows.Registr;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,8 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using CRM_Nomenclatyre.Models;
-using CRM_Nomenclatyre.Servises;
 
 namespace CRM_Nomenclatyre.Windows
 {
@@ -51,7 +52,7 @@ namespace CRM_Nomenclatyre.Windows
             this.Setting = setting;
             cRegistration = new RelayCommand(_=>
              {
-
+                 Setting.serviseWindow.WindowOpen<RegistrWindow>(new VM_Registr(Setting));
             }) ;
             cLogin = new RelayCommand(_ =>
             {
