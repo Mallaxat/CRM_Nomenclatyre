@@ -63,7 +63,8 @@ namespace CRM_Nomenclatyre.Windows
         //Методы
         
         private void exLogin()
-        {    
+        {
+            Logging log = new Logging();
             OnPropertyChanged("Login");
             OnPropertyChanged("Password");
 
@@ -72,9 +73,9 @@ namespace CRM_Nomenclatyre.Windows
                 Login = _login,
                 Password = _password
             };
-            Users usres = new Users();
 
-            if (Logging.IsLogin(userbuf,out usres)) Setting.serviseMessege.Show("Вход успешный", "Вход");
+            if (log.IsLogin(userbuf,out Setting.user)) 
+                Setting.serviseMessege.Show("Вход успешный", "Вход");
             else Setting.serviseMessege.Show("Не верный логин или пароль", "Вход");
         }
 

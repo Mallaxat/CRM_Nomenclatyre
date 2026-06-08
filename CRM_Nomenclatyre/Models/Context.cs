@@ -15,7 +15,7 @@ namespace CRM_Nomenclatyre.Models
         public DbSet<Articles> DbArticles { get; set; }
 
         //Конструктор 
-        public Context() : base("Marketplace") { }
+        public Context() : base("DB_MarketplaceMain") { }
 
 
     }

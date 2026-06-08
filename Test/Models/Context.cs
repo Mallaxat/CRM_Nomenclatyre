@@ -10,12 +10,13 @@ namespace Test.Models
     public class Context:DbContext
     {
         //Этот класс хранит ЗНАЧЕНИЯ в списке всех таблиц, которые есть в БД
-        public DbSet<Users> DbUsers { get; set; } 
+        public DbSet<Users> DbUsers { get; set; }
         public DbSet<Managers> DbManagers { get; set; }
         public DbSet<Articles> DbArticles { get; set; }
 
         //Конструктор 
-        public Context():base("DB_Marketplace") {}
+        public Context() : base("DB_MarketplaceMain") { }
+
 
     }
 }

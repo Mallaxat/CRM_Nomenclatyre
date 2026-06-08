@@ -2,32 +2,59 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
+using CRM_Nomenclatyre.Servises;
 
 namespace CRM_Nomenclatyre.Servises
 {
 
-    public static class Logging
+    public  class Logging
     {
-        public static bool IsLogin(Users user , out Users userout)
+        List<Users> List_users { get; set; }
+
+        public Logging() 
         {
-
-            //Задача из списка найти соответсвующего юзера
-            using (var db = new Context())
-            {
-                var userss = db.DbUsers.ToList();
-
-                userout =db.DbUsers.FirstOrDefault(x=>x.Login==user.Login);
-                if (userout==null) return false;
-                if (user.Login == userout.Login) return true;
-                return false;
-                
-            }
+            //connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
+            List_users = SqlService.SQL_User.GetTab_Of();
         }
+        public bool IsLogin(Users user,out Users resultUser)
+        {
+            if (List_users == null)
+            {
+                resultUser = null;
+                return false;
+            }
+            
+            //Отключенный режим
+            foreach(var item in List_users)
+            {
+                if (item.Login == user.Login && item.Password == user.Password) 
+                {
+                    resultUser= item;
+                    resultUser.Manager = SqlService.SQL_Manager.GetOne_Of(resultUser.Id);
+                    return true; 
+                }
+            }
+            resultUser = null;
+            return false;
+        }
+        public bool Regist(Users user)
+        {
+            //Подключенный режим
+            return false;
+
+        }
+
+
 
     }
 }

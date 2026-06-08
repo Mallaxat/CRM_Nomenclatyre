@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Test.Models;
-using Test.Servise;
+using Test.Servises;
 
 namespace Test
 {
@@ -45,14 +45,15 @@ namespace Test
         static void Main(string[] args)
         {
 
-            Users userbuf=new Users();
+            CreateBD();
+/*            Users userbuf=new Users();
             Users userbuf2 =new Users();
             userbuf2.Login = "1";
             userbuf2.Password = "1";
 
             bool result = Logging.IsLogin(userbuf2,out userbuf);
             Console.WriteLine(result);
-
+*/
 
 
         }
