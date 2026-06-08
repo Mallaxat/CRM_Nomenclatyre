@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using CRM_Nomenclatyre.Interface;
+
+namespace CRM_Nomenclatyre.Servises
+{
+    public class MessageeServise : IntMassege
+    {
+        private readonly Window _window;
+        public MessageeServise(Window window)
+        {
+            _window = window;
+        }
+        public void Show(string message)
+        {
+            MessageBox.Show(message);
+        }
+
+        public void Show(string message, string title)
+        {
+            MessageBox.Show(message);
+        }
+    }
+}
