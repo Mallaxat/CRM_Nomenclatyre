@@ -15,7 +15,7 @@ namespace Test.Models
         public DbSet<Articles> DbArticles { get; set; }
 
         //Конструктор 
-        public Context():base("Db_Marketplace"){}
+        public Context():base("DB_Marketplace") {}
 
     }
 }

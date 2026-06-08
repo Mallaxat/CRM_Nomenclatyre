@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using CRM_Nomenclatyre.Models;
 using CRM_Nomenclatyre.Servises;
 
 namespace CRM_Nomenclatyre.Windows
@@ -66,10 +67,14 @@ namespace CRM_Nomenclatyre.Windows
             OnPropertyChanged("Login");
             OnPropertyChanged("Password");
 
-            Setting.user.Password = _password;
-            Setting.user.Login = _login;
+            Users userbuf = new Users
+            {
+                Login = _login,
+                Password = _password
+            };
+            Users usres = new Users();
 
-            if (Logging.isLogin(Setting.user)) Setting.serviseMessege.Show("Вход успешный", "Вход");
+            if (Logging.IsLogin(userbuf,out usres)) Setting.serviseMessege.Show("Вход успешный", "Вход");
             else Setting.serviseMessege.Show("Не верный логин или пароль", "Вход");
         }
 

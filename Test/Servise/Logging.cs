@@ -10,19 +10,14 @@ namespace Test.Servise
 {
     public static class Logging
     {
-        public static bool Login(Users user)
+        public static bool IsLogin(Users user, out Users resUser)
         {
             //Задача из списка найти соответсвующего юзера
             using (var db = new Context())
             {
-                foreach (var item in db.DbUsers)
-                {
-                    if (item.Login == user.Login && item.Password==user.Password)
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                resUser = db.DbUsers.FirstOrDefault(x => x.Login == user.Login);
+                if (resUser == null) return false;
+                else return true;
             }
         }
 
