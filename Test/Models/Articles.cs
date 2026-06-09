@@ -17,7 +17,7 @@ namespace Test.Models
         [Required]
         public string Named { get; set; }
         [Required]
-        public string Sort { get; set; }
+        public string Sort { get; set; } //Это вид товара
         // Внешний ключ на менеджера
         [Required]
         public int ManagerId { get; set; }
@@ -26,6 +26,13 @@ namespace Test.Models
         [ForeignKey("ManagerId")]
         public virtual Managers Manager { get; set; }
 
+        //Свойства артикула
+        public string Size { get; set; } = "0";
+        public string Barcod { get; set; }
+        public int Count { get; set; }
+        public string Articul { get; set; }
+
+        //Методы
 
     }
 }

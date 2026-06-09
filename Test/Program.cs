@@ -42,6 +42,20 @@ namespace Test
             }
         }
 
+        private static string CreateNums(int count)
+        {
+            string res = String.Empty;
+            Random rand = new Random();
+            for (int i = 0; i < count; i++)
+            {
+                res += rand.Next(0, 9).ToString();
+            }
+            return res;
+
+        }
+
+
+
         static void Main(string[] args)
         {
 
@@ -54,28 +68,43 @@ namespace Test
                         bool result = Logging.IsLogin(userbuf2,out userbuf);
                         Console.WriteLine(result);
             */
-            Managers man = new Managers
+            /*            Managers man = new Managers
+                        {
+                            FirstName ="Petr",
+                            LastName = "Petr",
+                        };
+
+                        Users user = new Users
+                        {
+                            Login = "2",
+                            Password="2",
+                            Manager = man
+                        };
+
+                        SqlService.SQL_User.AddTab_On(user);
+
+                        List<Users> list = new List<Users>();
+                        list = SqlService.SQL_User.GetTab_Of();
+                        foreach(var i in list)
+                        {
+                            Console.WriteLine($"{i.Id} {i.Login} {i.Manager.LastName}");
+                        }
+            */
+
+            Articles art = new Articles
             {
-                FirstName ="Petr",
-                LastName = "Petr",
+                Named="tovar3",
+                Sort="type3",
+                ManagerId=1,
+                Size="L",
+                Barcod="000000000000",
+                Count=4,
+                Articul="11111"
+
             };
 
-            Users user = new Users
-            {
-                Login = "2",
-                Password="2",
-                Manager = man
-            };
-
-            SqlService.SQL_User.AddTab_On(user);
-
-            List<Users> list = new List<Users>();
-            list = SqlService.SQL_User.GetTab_Of();
-            foreach(var i in list)
-            {
-                Console.WriteLine($"{i.Id} {i.Login} {i.Manager.LastName}");
-            }
-
+            SqlService.SQL_Article.AddArticuleOf(art);
+            SqlService.SQL_Article.UpdateArticules();
         }
     }
 }

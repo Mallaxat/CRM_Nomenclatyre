@@ -9,6 +9,8 @@ namespace CRM_Nomenclatyre.Servises
 {
     public class Settings
     {
+        
+
         public readonly MessageeServise serviseMessege;
         public readonly WindowService serviseWindow;
 
@@ -23,6 +25,8 @@ namespace CRM_Nomenclatyre.Servises
             this.user = user;
             if (user == null) user = new Users();
         }
+
+
 
     }
 

@@ -13,9 +13,7 @@ namespace CRM_Nomenclatyre.Pages
 {
 
     public class VM_Articuls:INotifyPropertyChanged
-    {
-
-
+    {   
         //Свойства 
         private Settings Setting { get; set; }
         public List<Articles> ListArticules { get; set; } = new List<Articles>();
@@ -40,6 +38,7 @@ namespace CRM_Nomenclatyre.Pages
             ListArticules = SqlService.SQL_Article.GetArticlesOn(Setting.user.Id);
         }
         //Методы
+
 
         //Интерфейс
         public event PropertyChangedEventHandler PropertyChanged;
