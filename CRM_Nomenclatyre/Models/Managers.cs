@@ -21,7 +21,7 @@ namespace CRM_Nomenclatyre.Models
         // Один менеджер — много артикулов
         public ICollection<Articles> articles { get; set; }
 
-
+        public virtual Users User { get; set; }
 
     }
 }

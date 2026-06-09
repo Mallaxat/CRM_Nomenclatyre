@@ -75,8 +75,11 @@ namespace CRM_Nomenclatyre.Windows
                 Password = _password
             };
 
-            if (log.IsLogin(userbuf,out Setting.user)) 
+            if (log.IsLogin(userbuf,out Setting.user))
+            {
                 Setting.serviseMessege.Show("Вход успешный", "Вход");
+                Setting.serviseWindow.WindowOpenAndClose<MainWindow>(new VM_Main(Setting));
+            } 
             else Setting.serviseMessege.Show("Не верный логин или пароль", "Вход");
         }
 

@@ -10,26 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CRM_Nomenclatyre.Servises;
 
-namespace CRM_Nomenclatyre.Windows.Registr
+namespace CRM_Nomenclatyre.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для RegistrWindow.xaml
+    /// Логика взаимодействия для ArticulsPage.xaml
     /// </summary>
-    public partial class RegistrWindow : Window
+    public partial class ArticulsPage : Page
     {
-        public RegistrWindow()
+        public ArticulsPage()
         {
             InitializeComponent();
-        }
-
-        private void bt_Reg_Click(object sender, RoutedEventArgs e)
-        {
-            tb_FirstName.Text = "";
-            tb_LasttName.Text = "";
-            tb_Login.Text = "";
-            tb_Password.Text = "";
         }
     }
 }

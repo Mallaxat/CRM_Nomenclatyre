@@ -60,7 +60,12 @@ namespace CRM_Nomenclatyre.Servises
         }
         public  bool Regist(Users user)
         {
-            List_users.Add(user);
+            if (!IsLogin(user))
+            {
+                return false;
+            }
+
+                List_users.Add(user);
             return SqlService.SQL_User.AddTab_On(user);
 
         }

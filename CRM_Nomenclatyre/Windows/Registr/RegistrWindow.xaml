@@ -25,7 +25,7 @@
         <Label Content="Имя" 
               Grid.Column="1" Grid.Row="0"
               HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBox x:Name="tb_FirstName" Text="{Binding FirstName}"
+        <TextBox x:Name="tb_FirstName" Text="{Binding FirstName }"
               Grid.Column="2" Grid.Row="0"
               HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
         
@@ -52,7 +52,7 @@
         <Button x:Name="bt_Reg" Content="Регистрация" 
                  Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"
                 HorizontalAlignment="Center" VerticalAlignment="Top"
-                Command="{Binding cAddUser}"/>
+                Command="{Binding cAddUser}" Click="bt_Reg_Click"/>
 
 
 

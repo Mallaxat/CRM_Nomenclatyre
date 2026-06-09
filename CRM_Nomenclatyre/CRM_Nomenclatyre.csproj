@@ -73,7 +73,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Migrations\202606090951301_var1.cs" />
+    <Compile Include="Migrations\202606090951301_var1.Designer.cs">
+      <DependentUpon>202606090951301_var1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SqlService.cs" />
+    <Compile Include="Pages\Articuls\ArticulsPage.xaml.cs">
+      <DependentUpon>ArticulsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Articuls\VM_Articuls.cs" />
     <Compile Include="Servises\Logging.cs" />
     <Compile Include="Windows\Login\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -84,6 +93,10 @@
       <DependentUpon>RegistrWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Registr\VM_Registr.cs" />
+    <Page Include="Pages\Articuls\ArticulsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Login\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,6 +141,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202606090951301_var1.resx">
+      <DependentUpon>202606090951301_var1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -141,9 +157,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

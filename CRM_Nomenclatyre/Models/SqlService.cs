@@ -23,6 +23,7 @@ namespace CRM_Nomenclatyre.Servises
         GET_MANAGER,
         ADD_USER,
         GET_USER,
+        GET_ARTICLES_BY_MANAGER
     }
 
     public static class SqlService
@@ -153,6 +154,39 @@ namespace CRM_Nomenclatyre.Servises
             }
 
 
+        }
+    
+        public static class SQL_Article
+        {
+            public static List<Articles> GetArticlesOn(int id)
+            {
+                using(SqlConnection conn = new SqlConnection(connect))
+                {
+                    List<Articles> result=new List<Articles>();
+                    conn.Open();
+                    SqlCommand cmd=new SqlCommand(SQL_PROC.GET_ARTICLES_BY_MANAGER.ToString(), conn);
+                    cmd.CommandType= CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ManagerId",id);
+                    SqlDataReader reader=cmd.ExecuteReader();
+
+                    while(reader.Read())
+                    {
+                        result.Add(new Articles
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Named = reader["Named"].ToString(),
+                            Sort = reader["Sort"].ToString(),
+                            ManagerId = Convert.ToInt32(reader["ManagerId"]),
+                            Size = reader["Size"].ToString(),
+                            Barcod = Convert.ToInt32(reader["Barcod"]),
+                            Count = Convert.ToInt32(reader["Count"]),
+                            Articul = Convert.ToInt32(reader["Articul"]),
+                        }
+                            );                     
+                    }
+                    return result;
+                }
+            }
         }
     }
 }

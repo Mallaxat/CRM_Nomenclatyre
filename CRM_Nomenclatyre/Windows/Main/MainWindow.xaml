@@ -22,7 +22,7 @@
         <Frame x:Name="Main_Frame" 
                Grid.Column="1" Grid.Row="1"
                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-               Content="Frame"/>
+               Content="{Binding CurrentPage}"/>
 
     </Grid>
 </Window>

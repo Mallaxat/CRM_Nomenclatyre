@@ -1,5 +1,4 @@
-﻿using CRM_Nomenclatyre.Pages;
-using CRM_Nomenclatyre.Servises;
+﻿using CRM_Nomenclatyre.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,33 +6,38 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using CRM_Nomenclatyre.Servises;
+using System.Windows.Input;
 
-namespace CRM_Nomenclatyre.Windows
+namespace CRM_Nomenclatyre.Pages
 {
-    public class VM_Main : INotifyPropertyChanged
+
+    public class VM_Articuls:INotifyPropertyChanged
     {
 
-        //Свойства
+
+        //Свойства 
         private Settings Setting { get; set; }
-        private Page currentpage;
-        public Page CurrentPage
+        public List<Articles> ListArticules { get; set; } = new List<Articles>();
+        public Articles _seletArticul;
+        public Articles SeletArticul
         {
-            get => currentpage;
+            get => _seletArticul;
             set
             {
-                currentpage = value;
+                if (value == null) return;
+                _seletArticul = value;
                 OnPropertyChanged();
             }
         }
-       
-        //Команды
 
+        //Команды
+        public ICommand AddTovar { get; }
         //Коснтруктор
-        public VM_Main(Settings Setting) 
-        { 
+        public VM_Articuls(Settings Setting)
+        {
             this.Setting = Setting;
-            CurrentPage = Setting.serviseWindow.PageOpen<VM_Articuls, ArticulsPage>(Setting);
+            ListArticules = SqlService.SQL_Article.GetArticlesOn(Setting.user.Id);
         }
         //Методы
 

@@ -24,7 +24,6 @@ namespace CRM_Nomenclatyre.Windows.Registr
             get => _login;
             set
             {
-                if (value == null || _login == null) return;
                 _login = value;
                 OnPropertyChanged();
             }
@@ -35,7 +34,6 @@ namespace CRM_Nomenclatyre.Windows.Registr
             get => _password;
             set
             {
-                if (value == null || _password == null) return;
                 _password = value;
                 OnPropertyChanged();
             }
@@ -47,7 +45,6 @@ namespace CRM_Nomenclatyre.Windows.Registr
             get => _firstName;
             set
             {
-                if (value == null || _firstName == null) return;
                 _firstName = value;
                 OnPropertyChanged();
             }
@@ -59,7 +56,6 @@ namespace CRM_Nomenclatyre.Windows.Registr
             get => _lastName;
             set
             {
-                if (value == null || _lastName == null) return;
                 _lastName = value;
                 OnPropertyChanged();
             }
@@ -78,12 +74,14 @@ namespace CRM_Nomenclatyre.Windows.Registr
             this.Setting = setting;
             cAddUser = new RelayCommand(_ =>
             {
-                log.Regist(AddUser());
+                if (log.Regist(AddUser())) Setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
+                else Setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");
             });
         }
         //Методы
         public Users AddUser()
         {
+
             if(IsEmpty(Login) || IsEmpty(Password) ||
                IsEmpty(FirstName)|| IsEmpty(LastName)) return null;
 
