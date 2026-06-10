@@ -65,8 +65,9 @@ namespace CRM_Nomenclatyre.Servises
                 return false;
             }
 
-                List_users.Add(user);
-            return SqlService.SQL_User.AddTab_On(user);
+            List_users.Add(user);
+            bool test = SqlService.SQL_User.AddTab_On(user);
+            return test;
 
         }
 

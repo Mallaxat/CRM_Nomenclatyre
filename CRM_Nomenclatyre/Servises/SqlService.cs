@@ -70,7 +70,7 @@ namespace CRM_Nomenclatyre.Servises
                 }
                 return result;
             }
-
+            //ПРОБЛЕМА
             public static bool AddTab_On(Users user)
             {
                 using (SqlConnection con= new SqlConnection(connect))
@@ -88,7 +88,7 @@ namespace CRM_Nomenclatyre.Servises
                     outPar.Direction = ParameterDirection.Output;
 
                     result = cmd.ExecuteNonQuery();
-
+                    //ВОТ ТУТ ПРОБЛЕМА ВСЕГДА ВОЗВРАЩАЕТСЯ -1!!!
                     return (result > 0) ? true : false;
                 }
             }

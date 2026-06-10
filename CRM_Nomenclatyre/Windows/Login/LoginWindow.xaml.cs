@@ -29,7 +29,7 @@ namespace CRM_Nomenclatyre.Windows
         public LoginWindow()
         {
             InitializeComponent();
-            _setting = new Settings(new MessageeServise(this), new WindowService(), new Users());
+            _setting = Settings.Initialize(new MessageeServise(this), new WindowService(), new Users());
             _vm = new VM_Login(_setting);
             DataContext = _vm;
 
