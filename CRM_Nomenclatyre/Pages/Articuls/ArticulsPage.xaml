@@ -25,7 +25,7 @@
                   Grid.Column="1" Grid.Row="1"
                   CanUserAddRows="False" CanUserDeleteRows="False" 
                   AutoGenerateColumns="False"
-                  ItemsSource="{Binding ListArticules}"
+                  DataContext="{Binding ListData}"
                   SelectedItem="{Binding SeletArticul}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Артикул" Binding="{Binding Named}"/>

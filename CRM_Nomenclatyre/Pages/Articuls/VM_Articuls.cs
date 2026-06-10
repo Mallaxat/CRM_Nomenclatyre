@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CRM_Nomenclatyre.Servises;
 using System.Windows.Input;
+using System.Data;
 
 namespace CRM_Nomenclatyre.Pages
 {
@@ -17,6 +18,8 @@ namespace CRM_Nomenclatyre.Pages
         //Свойства 
         private Settings Setting { get; set; }
         public List<Articles> ListArticules { get; set; } = new List<Articles>();
+        public DataSet ListData {  get; set; } = new DataSet();
+       
         public Articles _seletArticul;
         public Articles SeletArticul
         {
@@ -35,7 +38,9 @@ namespace CRM_Nomenclatyre.Pages
         public VM_Articuls(Settings Setting)
         {
             this.Setting = Setting;
+            ListData = SqlService.LoadBD("tab_Article");
             ListArticules = SqlService.SQL_Article.GetArticlesOn(Setting.user.Id);
+            
         }
         //Методы
 
