@@ -86,10 +86,6 @@
     <Compile Include="Pages\Articuls\ArticulsPage.xaml.cs">
       <DependentUpon>ArticulsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Articuls\CreateWindow\CreateTovarWindow.xaml.cs">
-      <DependentUpon>CreateTovarWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Articuls\CreateWindow\VM_CreateTovar.cs" />
     <Compile Include="Pages\Articuls\VM_Articuls.cs" />
     <Compile Include="Servises\Logging.cs" />
     <Compile Include="Windows\Login\LoginWindow.xaml.cs">
@@ -102,10 +98,6 @@
     </Compile>
     <Compile Include="Windows\Registr\VM_Registr.cs" />
     <Page Include="Pages\Articuls\ArticulsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Articuls\CreateWindow\CreateTovarWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

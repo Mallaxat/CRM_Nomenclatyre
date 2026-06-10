@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
 namespace Test.Servises
 {
     enum TAB_NAME
@@ -28,12 +29,51 @@ namespace Test.Servises
         FIND_ARTICLE,
         ADD_ARTICLE
 
+
     }
 
     public static class SqlService
     {
+        private static DataTable dataTable;
+        private static DataSet dataSet;
+        private static SqlDataAdapter adapter;
+        private static SqlConnection conn =null;
+
         private const string CONNECT = "DB_MarketplaceMain";
         private static string connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
+
+        public static DataSet UpdateTableBD(DataSet table, string tablename)
+        {
+            adapter.Update(table, tablename);
+            dataTable.Clear();
+            adapter.Fill(table);
+            return table;
+        }
+
+        public static DataSet LoadBD(string tableName,int id)
+        {
+            try
+            {
+                using (conn = new SqlConnection(connect))
+                {
+                    adapter = new SqlDataAdapter($"Select * from {tableName} where ManagerId={id}", conn);
+                    SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
+
+                    dataSet = new DataSet();
+                    adapter.Fill(dataSet, tableName);
+                    return dataSet;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                if (conn != null || conn.State == ConnectionState.Open) conn.Close();
+
+            }
+        }
 
         public static class SQL_User
         {
@@ -67,7 +107,7 @@ namespace Test.Servises
                 }
                 return result;
             }
-
+            //ПРОБЛЕМА
             public static bool AddTab_On(Users user)
             {
                 using (SqlConnection con= new SqlConnection(connect))
@@ -85,16 +125,19 @@ namespace Test.Servises
                     outPar.Direction = ParameterDirection.Output;
 
                     result = cmd.ExecuteNonQuery();
-
+                    //ВОТ ТУТ ПРОБЛЕМА ВСЕГДА ВОЗВРАЩАЕТСЯ -1!!!
                     return (result > 0) ? true : false;
                 }
             }
+
+
+
         }
         public static class SQL_Manager
         {
             public static List<Managers> GetTab_Of()
             {
-                using (SqlConnection conn = new SqlConnection(connect))
+                using (conn = new SqlConnection(connect))
                 {
                     List<Managers> result = new List<Managers>();
                     conn.Open();
@@ -122,7 +165,7 @@ namespace Test.Servises
 
             public static Managers GetOne_Of(int id)
             {
-                using (SqlConnection conn = new SqlConnection(connect))
+                using (conn = new SqlConnection(connect))
                 {
                     Managers result=new Managers();
                     conn.Open();
@@ -158,13 +201,10 @@ namespace Test.Servises
     
         public static class SQL_Article
         {
-            private static DataTable dt_artic;
-            private static DataSet ds_artic;
-            private static SqlDataAdapter adapter_artic;
 
             public static List<Articles> GetArticlesOn(int id)
             {
-                using(SqlConnection conn = new SqlConnection(connect))
+                using(conn = new SqlConnection(connect))
                 {
                     List<Articles> result=new List<Articles>();
                     conn.Open();
@@ -195,7 +235,7 @@ namespace Test.Servises
             public static bool FindBar(string bar)
             {
                 //Подключенный режим, чтобы не возникло ситуаций дубля баркода
-                using (SqlConnection conn = new SqlConnection(connect))
+                using (conn = new SqlConnection(connect))
                 {
                     SqlCommand cmd = new SqlCommand(SQL_PROC.FIND_BAR.ToString(), conn);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -211,7 +251,7 @@ namespace Test.Servises
             public static bool FindArticule(string articule)
             {
                 //Подключенный режим, чтобы не возникло ситуаций дубля баркода
-                using (SqlConnection conn = new SqlConnection(connect))
+                using (conn = new SqlConnection(connect))
                 {
                     SqlCommand cmd = new SqlCommand(SQL_PROC.FIND_ARTICLE.ToString(), conn);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -224,37 +264,6 @@ namespace Test.Servises
                 }
             }
 
-            public static void AddArticuleOf(Articles articles)
-            {
-                //Оффалйн потому что это не критично важно
-                adapter_artic = new SqlDataAdapter("Select *from dbo.tab_Article", connect);
-                SqlCommandBuilder bild=new SqlCommandBuilder(adapter_artic);
-
-                ds_artic = new DataSet();
-                //Заполняем таблицу имя пусть то же будет
-                adapter_artic.Fill(ds_artic);
-                dt_artic = ds_artic.Tables[0];
-
-                //Создаем новую строку и заполняем значения
-                DataRow row = dt_artic.NewRow();
-                row[1] = articles.Named;
-                row[2] = articles.Sort;
-                row[3] = articles.ManagerId;
-                row[4] = articles.Size;
-                row[5] = articles.Barcod;
-                row[6] = articles.Count;
-                row[7] = articles.Articul;
-
-                dt_artic.Rows.Add(row);
-
-            }
-       
-            public static void UpdateArticules()
-            {
-                adapter_artic.Update(ds_artic);
-                dt_artic.Clear();
-                adapter_artic.Fill(ds_artic);
-            }
         }
     }
 }

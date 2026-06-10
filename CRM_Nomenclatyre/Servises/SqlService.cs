@@ -41,26 +41,67 @@ namespace CRM_Nomenclatyre.Servises
         private const string CONNECT = "DB_MarketplaceMain";
         private static string connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
 
-        public static DataSet UpdateTableBD(DataSet table, string tablename)
+        public static void UpdateTableBD(DataSet dataSet, string tableName,int id)
         {
-            adapter.Update(table, tablename);
-            dataTable.Clear();
-            adapter.Fill(table);
-            return table;
+
+            using (conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                string sqlCommand = $"Select * from {tableName} where ManagerId={id}";
+                adapter = new SqlDataAdapter(sqlCommand, conn);
+
+                SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
+
+                DataTable table=dataSet.Tables[tableName];
+
+                dataTable=dataSet.Tables[tableName];
+                adapter.Update(table);
+                table.Clear();
+                adapter.Fill(dataSet,tableName);
+
+            }
+
+
         }
 
-        public static DataSet LoadBD(string tableName)
+
+        public static DataSet LoadSetBD(string tableName, int id)
         {
             try
             {
                 using (conn = new SqlConnection(connect))
                 {
-                    adapter = new SqlDataAdapter($"Select * from {tableName}", conn);
+                    adapter = new SqlDataAdapter($"Select * from {tableName} where ManagerId={id}", conn);
                     SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
 
                     dataSet = new DataSet();
                     adapter.Fill(dataSet, tableName);
                     return dataSet;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                if (conn != null || conn.State == ConnectionState.Open) conn.Close();
+
+            }
+        }
+        public static DataTable LoadTableBD(string tableName, int id)
+        {
+            try
+            {
+                using (conn = new SqlConnection(connect))
+                {
+                    adapter = new SqlDataAdapter($"Select * from {tableName} where ManagerId={id}", conn);
+                    SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
+
+                    dataSet = new DataSet();
+                    adapter.Fill(dataSet, tableName);
+                    dataTable = dataSet.Tables[0];
+                    return dataTable;
                 }
             }
             catch

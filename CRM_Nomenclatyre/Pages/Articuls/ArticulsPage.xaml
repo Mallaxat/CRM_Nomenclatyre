@@ -23,20 +23,22 @@
         <!--#endregion-->
         <DataGrid x:Name="dg_artList" 
                   Grid.Column="1" Grid.Row="1"
-                  CanUserAddRows="False" CanUserDeleteRows="False" 
-                  AutoGenerateColumns="False"
-                  DataContext="{Binding ListData}"
-                  SelectedItem="{Binding SeletArticul}">
+                  CanUserAddRows="True" CanUserDeleteRows="False" 
+                  ItemsSource="{Binding ListDataTable}"
+                  SelectedItem="{Binding SeletArticul}"
+                  AutoGenerateColumns="False">
+                
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Артикул" Binding="{Binding Named}"/>
-                <DataGridTextColumn Header="Номенклатура" Binding="{Binding Articul}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Товар" Binding="{Binding Sort}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Размер" Binding="{Binding Size}"/>
-                <DataGridTextColumn Header="Количество" Binding="{Binding Count}"/>
-                <DataGridTextColumn Header="Баркод" Binding="{Binding Barcod}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Код" Binding="{Binding ManagerId, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Артикул" Binding="{Binding Named , UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Номенклатура" Binding="{Binding Articul, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Товар" Binding="{Binding Sort, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Размер" Binding="{Binding Size, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Количество" Binding="{Binding Count, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Баркод" Binding="{Binding Barcod, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Добавить" Command="{Binding AddTovar}"
+        <Button Content="Обновить" Command="{Binding cUpdate}"
                 Grid.Column="1"  
                 HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
     </Grid>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CRM_Nomenclatyre.Servises;
 
 namespace CRM_Nomenclatyre.Models
 {
@@ -28,11 +29,15 @@ namespace CRM_Nomenclatyre.Models
 
         //Свойства артикула
         public string? Size { get; set; } = "0";
-        public string Barcod { get; set; }
+        public string  Barcod { get; set; }
         public int Count { get; set; }  
         public string Articul {  get; set; }
      
+        //конструктор
+
+    
         //Методы
+
 
     }
 }

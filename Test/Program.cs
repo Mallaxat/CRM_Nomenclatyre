@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Test.Servises;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Test.Models;
-using Test.Servises;
 
 namespace Test
 {
@@ -103,8 +104,17 @@ namespace Test
 
             };
 
-            SqlService.SQL_Article.AddArticuleOf(art);
-            SqlService.SQL_Article.UpdateArticules();
+            DataSet Dat= new DataSet();
+
+            Console.WriteLine("Обновление");
+
+            Dat = SqlService. LoadBD("tab_Article",0);
+
+            DataTable Tab = Dat.Tables[0];
+            foreach (DataRow item in Tab.Rows)
+            {
+                Console.WriteLine($"{item[0].ToString()} {item[1].ToString()} {item[2].ToString()}");
+            }
         }
     }
 }

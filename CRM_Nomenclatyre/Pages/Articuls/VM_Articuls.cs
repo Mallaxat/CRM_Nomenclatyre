@@ -9,16 +9,40 @@ using System.Threading.Tasks;
 using CRM_Nomenclatyre.Servises;
 using System.Windows.Input;
 using System.Data;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace CRM_Nomenclatyre.Pages
 {
 
     public class VM_Articuls:INotifyPropertyChanged
-    {   
+    {
         //Свойства 
+        private const string TABLENAME = "tab_Article";
         private Settings Setting { get; set; }
-        public List<Articles> ListArticules { get; set; } = new List<Articles>();
-        public DataSet ListData {  get; set; } = new DataSet();
+
+        private DataSet _listDataSet;
+        public DataSet ListDataSet
+        {
+            get => _listDataSet;
+            set
+            {
+                if (value == null) return;
+                _listDataSet = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DataTable _listDataTabe;
+        public DataTable ListDataTable
+        {
+            get => _listDataTabe;
+            set
+            {
+                if (value == null) return;
+                _listDataTabe = value;
+                OnPropertyChanged();
+            }
+        }
        
         public Articles _seletArticul;
         public Articles SeletArticul
@@ -33,16 +57,33 @@ namespace CRM_Nomenclatyre.Pages
         }
 
         //Команды
-        public ICommand AddTovar { get; }
+        public ICommand cUpdate { get; }
+
         //Коснтруктор
         public VM_Articuls(Settings Setting)
         {
             this.Setting = Setting;
-            ListData = SqlService.LoadBD("tab_Article");
-            ListArticules = SqlService.SQL_Article.GetArticlesOn(Setting.user.Id);
-            
+            ListDataSet = SqlService.LoadSetBD(TABLENAME, Setting.user.Id);
+            ListDataTable = ListDataSet.Tables[0];
+
+            //Вносим дефолтное значение для менеджера
+            if (ListDataTable != null && ListDataTable.Columns.Contains("ManagerId"))
+            {
+                ListDataTable.Columns["ManagerId"].DefaultValue = Setting.user.Id;
+            }
+
+            cUpdate = new RelayCommand(_ =>
+            {
+                UpdateDataSet();
+            });
+
         }
         //Методы
+        private void UpdateDataSet()
+        {
+            
+            SqlService.UpdateTableBD(ListDataSet, TABLENAME,Setting.user.Id);
+        }
 
 
         //Интерфейс
@@ -51,5 +92,10 @@ namespace CRM_Nomenclatyre.Pages
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
         }
+
+
+
+
+
     }
 }
