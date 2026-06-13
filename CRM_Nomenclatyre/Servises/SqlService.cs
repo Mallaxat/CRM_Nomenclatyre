@@ -15,7 +15,8 @@ namespace CRM_Nomenclatyre.Servises
     {
         tab_Article,
         tab_Manager,
-        tab_Users
+        tab_Users,
+        tab_TypeTovar
     }
 
     enum SQL_PROC
@@ -114,6 +115,8 @@ namespace CRM_Nomenclatyre.Servises
 
             }
         }
+
+
 
         public static class SQL_User
         {
@@ -238,6 +241,31 @@ namespace CRM_Nomenclatyre.Servises
 
 
         }
+        public static class SQL_TypeTovar
+        {
+            public static List<string> GetTab_Of()
+            {
+                using (conn = new SqlConnection(connect))
+                {
+                    List<string> result = new List<string>();
+                    conn.Open();
+                    string comand = $"Select * From {TAB_NAME.tab_TypeTovar.ToString()}";
+                    SqlDataAdapter adapter = new SqlDataAdapter(comand, conn);
+                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                    DataSet ds_tab = new DataSet();
+                    //Заполняем
+                    adapter.Fill(ds_tab);
+                    //Возьми первую таблицу из DataSet, но у меня там только 1 таблица и будет
+                    DataTable dt_tap = ds_tab.Tables[0];
+
+                    foreach (DataRow item in dt_tap.Rows)
+                    {
+                        result.Add(item["Name"].ToString());            
+                    }
+                    return result;
+                }
+            }
+        }
     
         public static class SQL_Article
         {
@@ -259,7 +287,7 @@ namespace CRM_Nomenclatyre.Servises
                         {
                             Id = Convert.ToInt32(reader["id"]),
                             Named = reader["Named"].ToString(),
-                            Sort = reader["Sort"].ToString(),
+                            Sort = Convert.ToInt32(reader["Sort"]),
                             ManagerId = Convert.ToInt32(reader["ManagerId"]),
                             Size = reader["Size"].ToString(),
                             Barcod = reader["Barcod"].ToString(),

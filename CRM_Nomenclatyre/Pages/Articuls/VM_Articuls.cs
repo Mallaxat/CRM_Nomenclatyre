@@ -22,6 +22,12 @@ namespace CRM_Nomenclatyre.Pages
         Barcod,
         Articul
     }
+    public enum TovarList
+    {
+        юбки,
+        брюки,
+        куртки
+    }
 
     public class VM_Articuls:INotifyPropertyChanged
     {
@@ -65,19 +71,31 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
+        public List<string> _typeList;
+        public List<string> TypeList
+        {
+            get => _typeList;
+            set
+            {
+                if (value == null) return;
+                _typeList = value;
+                OnPropertyChanged();
+            }
+        }
+
         //Команды
         public ICommand cUpdate { get; }
 
         //Коснтруктор
         public VM_Articuls(Settings Setting)
         {
-
             this.Setting = Setting;
             ListDataSet = SqlService.LoadSetBD(TABLENAME, Setting.user.Id);
             ListDataTable = ListDataSet.Tables[0];
+            TypeList = SqlService.SQL_TypeTovar.GetTab_Of();
 
             //Вносим дефолтное значение для менеджера
-   
+
             SetNums();
             cUpdate = new RelayCommand(_ =>
             {

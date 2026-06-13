@@ -81,7 +81,12 @@
     <Compile Include="Migrations\202606091156184_var2stringArt.Designer.cs">
       <DependentUpon>202606091156184_var2stringArt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202606131247144_var3.cs" />
+    <Compile Include="Migrations\202606131247144_var3.Designer.cs">
+      <DependentUpon>202606131247144_var3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\TypeTovar.cs" />
     <Compile Include="Servises\SqlService.cs" />
     <Compile Include="Pages\Articuls\ArticulsPage.xaml.cs">
       <DependentUpon>ArticulsPage.xaml</DependentUpon>
@@ -150,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202606091156184_var2stringArt.resx">
       <DependentUpon>202606091156184_var2stringArt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606131247144_var3.resx">
+      <DependentUpon>202606131247144_var3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

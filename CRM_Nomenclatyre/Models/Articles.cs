@@ -18,7 +18,9 @@ namespace CRM_Nomenclatyre.Models
         [Required]
         public string Named { get; set; }
         [Required]
-        public string Sort { get; set; } //Это вид товара
+        public int Sort { get; set; }
+        [ForeignKey("Sort")]
+        public virtual TypeTovar TypeTovar { get; set; }
         // Внешний ключ на менеджера
         [Required]
         public int ManagerId { get; set; }
