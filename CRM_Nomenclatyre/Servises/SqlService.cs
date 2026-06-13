@@ -243,11 +243,11 @@ namespace CRM_Nomenclatyre.Servises
         }
         public static class SQL_TypeTovar
         {
-            public static List<string> GetTab_Of()
+            public static List<TypeTovar> GetTab_Of()
             {
                 using (conn = new SqlConnection(connect))
                 {
-                    List<string> result = new List<string>();
+                    List<TypeTovar> result = new List<TypeTovar>();
                     conn.Open();
                     string comand = $"Select * From {TAB_NAME.tab_TypeTovar.ToString()}";
                     SqlDataAdapter adapter = new SqlDataAdapter(comand, conn);
@@ -260,12 +260,19 @@ namespace CRM_Nomenclatyre.Servises
 
                     foreach (DataRow item in dt_tap.Rows)
                     {
-                        result.Add(item["Name"].ToString());            
+                        result.Add(new TypeTovar
+                        {
+                            Name = item["Name"].ToString(),
+                            Id = Convert.ToInt32(item["Id"]),
+
+                        });
                     }
                     return result;
                 }
+
             }
         }
+        
     
         public static class SQL_Article
         {

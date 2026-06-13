@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CRM_Nomenclatyre.Servises;
+using CRM_Nomenclatyre.Models;
 
 namespace CRM_Nomenclatyre.Pages
 {

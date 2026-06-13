@@ -20,13 +20,8 @@ namespace CRM_Nomenclatyre.Pages
     {
         ManagerId,
         Barcod,
-        Articul
-    }
-    public enum TovarList
-    {
-        юбки,
-        брюки,
-        куртки
+        Articul,
+        Sort
     }
 
     public class VM_Articuls:INotifyPropertyChanged
@@ -58,8 +53,8 @@ namespace CRM_Nomenclatyre.Pages
                 OnPropertyChanged();
             }
         }
-       
-        public Articles _seletArticul;
+
+        private Articles _seletArticul;
         public Articles SeletArticul
         {
             get => _seletArticul;
@@ -71,8 +66,8 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
-        public List<string> _typeList;
-        public List<string> TypeList
+        private List<TypeTovar> _typeList;
+        public List<TypeTovar> TypeList
         {
             get => _typeList;
             set
@@ -83,9 +78,10 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
+
         //Команды
         public ICommand cUpdate { get; }
-
+        
         //Коснтруктор
         public VM_Articuls(Settings Setting)
         {
@@ -104,7 +100,7 @@ namespace CRM_Nomenclatyre.Pages
         }
         //Методы
         private void UpdateDataSet()
-        { 
+        {
             SqlService.UpdateTableBD(ListDataSet, TABLENAME,Setting.user.Id);
         }
 
@@ -133,7 +129,6 @@ namespace CRM_Nomenclatyre.Pages
             {
                 ListDataTable.Columns[TabNameArticle.ManagerId.ToString()].DefaultValue = Setting.user.Id;
             }
-
         }
 
 
