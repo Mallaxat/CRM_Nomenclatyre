@@ -39,6 +39,31 @@ namespace CRM_Nomenclatyre.Servises
             return _instance;
         }
 
+        public static string Rand(int count, bool var = true)
+        {
+            Random rnd = new Random();
+            string result;
+            while (true)
+            {
+                result = String.Empty;
+                for (int i=0;i<count;i++)
+                {
+                    result += rnd.Next(0, 9);
+                }
+               if(var)
+                {
+                    if (!SqlService.SQL_Article.FindBar(result)) 
+                        return result;
+
+                }
+                else 
+                {
+                    if (!SqlService.SQL_Article.FindArticule(result)) 
+                        return result;
+                }
+            }
+        }
+
 
 
     }

@@ -277,6 +277,7 @@ namespace CRM_Nomenclatyre.Servises
                 //Подключенный режим, чтобы не возникло ситуаций дубля баркода
                 using (conn = new SqlConnection(connect))
                 {
+                    conn.Open();
                     SqlCommand cmd = new SqlCommand(SQL_PROC.FIND_BAR.ToString(), conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Barcod", bar);
@@ -293,9 +294,10 @@ namespace CRM_Nomenclatyre.Servises
                 //Подключенный режим, чтобы не возникло ситуаций дубля баркода
                 using (conn = new SqlConnection(connect))
                 {
+                    conn.Open();
                     SqlCommand cmd = new SqlCommand(SQL_PROC.FIND_ARTICLE.ToString(), conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Barcod", articule);
+                    cmd.Parameters.AddWithValue("@Articul", articule);
                     SqlParameter outPar = cmd.Parameters.Add("@Result", SqlDbType.Int);
                     outPar.Direction = ParameterDirection.Output;
 

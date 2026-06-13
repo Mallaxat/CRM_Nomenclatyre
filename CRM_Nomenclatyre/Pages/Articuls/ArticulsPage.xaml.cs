@@ -25,5 +25,22 @@ namespace CRM_Nomenclatyre.Pages
         {
             InitializeComponent();
         }
+
+        private void Grid_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Commit();
+        }
+
+
+        private void Commit()
+        {
+            dg_artList.CommitEdit(DataGridEditingUnit.Cell, true);
+            dg_artList.CommitEdit(DataGridEditingUnit.Row, true);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Commit();
+        }
     }
 }

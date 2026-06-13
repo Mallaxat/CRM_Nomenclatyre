@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ArticulsPage">
 
-    <Grid>
+    <Grid Unloaded="Grid_Unloaded">
         <!--#region -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -23,13 +23,13 @@
         <!--#endregion-->
         <DataGrid x:Name="dg_artList" 
                   Grid.Column="1" Grid.Row="1"
-                  CanUserAddRows="True" CanUserDeleteRows="False" 
+                  CanUserAddRows="True" CanUserDeleteRows="True" 
                   ItemsSource="{Binding ListDataTable}"
                   SelectedItem="{Binding SeletArticul}"
                   AutoGenerateColumns="False">
                 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Код" Binding="{Binding ManagerId, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Код" Binding="{Binding ManagerId, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Visibility="Collapsed"/>
                 <DataGridTextColumn Header="Артикул" Binding="{Binding Named , UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Номенклатура" Binding="{Binding Articul, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Товар" Binding="{Binding Sort, UpdateSourceTrigger=PropertyChanged}"/>
@@ -40,6 +40,6 @@
         </DataGrid>
         <Button Content="Обновить" Command="{Binding cUpdate}"
                 Grid.Column="1"  
-                HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Click"/>
     </Grid>
 </Page>
