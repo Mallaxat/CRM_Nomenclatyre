@@ -74,8 +74,15 @@ namespace CRM_Nomenclatyre.Windows.Registr
             this.Setting = setting;
             cAddUser = new RelayCommand(_ =>
             {
-                bool test = log.Regist(AddUser());
-                if (log.Regist(AddUser())) Setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
+                Users us=AddUser();
+                bool result = SqlService.SQL_User.Check_One(us.Login);
+
+                if (SqlService.SQL_User.Check_One(us.Login))
+                {
+                    SqlService.SQL_User.AddTab_On(us);
+                    Setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
+
+                }
                 else Setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");
             });
         }
@@ -85,7 +92,6 @@ namespace CRM_Nomenclatyre.Windows.Registr
 
             if(IsEmpty(Login) || IsEmpty(Password) ||
                IsEmpty(FirstName)|| IsEmpty(LastName)) return null;
-
 
             Managers men = new Managers
             {

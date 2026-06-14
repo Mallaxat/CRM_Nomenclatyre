@@ -27,7 +27,8 @@ namespace CRM_Nomenclatyre.Servises
         GET_ARTICLES_BY_MANAGER,
         FIND_BAR,
         FIND_ARTICLE,
-        ADD_ARTICLE
+        ADD_ARTICLE,
+        CHECK_USER_LOGIN
 
 
     }
@@ -151,11 +152,11 @@ namespace CRM_Nomenclatyre.Servises
                 return result;
             }
             //ПРОБЛЕМА
-            public static bool AddTab_On(Users user)
+            public static void  AddTab_On(Users user)
             {
                 using (SqlConnection con= new SqlConnection(connect))
                 {
-                    int result = 0;
+                    
                     con.Open();
                     SqlCommand cmd=new SqlCommand(SQL_PROC.ADD_USER.ToString(), con);
                     cmd.CommandType= CommandType.StoredProcedure;
@@ -163,12 +164,26 @@ namespace CRM_Nomenclatyre.Servises
                     cmd.Parameters.AddWithValue("@Password", user.Password);
                     cmd.Parameters.AddWithValue("@FirstName", user.Manager.FirstName);
                     cmd.Parameters.AddWithValue("@LastName", user.Manager.LastName);
+                    cmd.ExecuteNonQuery();
 
-                    SqlParameter outPar=cmd.Parameters.Add("@Id",SqlDbType.Int);
+                }
+            }
+            public static bool Check_One(string login)
+            {
+                using (SqlConnection con = new SqlConnection(connect))
+                {
+                    int result = 0;
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(SQL_PROC.CHECK_USER_LOGIN.ToString(), con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Login", login);
+
+                    SqlParameter outPar = cmd.Parameters.Add("@Result", SqlDbType.Int);
                     outPar.Direction = ParameterDirection.Output;
 
-                    result = cmd.ExecuteNonQuery();
-                    //ВОТ ТУТ ПРОБЛЕМА ВСЕГДА ВОЗВРАЩАЕТСЯ -1!!!
+                   cmd.ExecuteNonQuery();
+                   result = Convert.ToInt32(outPar.Value);
+
                     return (result > 0) ? true : false;
                 }
             }

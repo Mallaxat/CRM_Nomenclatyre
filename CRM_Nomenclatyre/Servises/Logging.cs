@@ -23,7 +23,6 @@ namespace CRM_Nomenclatyre.Servises
 
         public Logging() 
         {
-            //connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
             List_users = SqlService.SQL_User.GetTab_Of();
         }
         public bool IsLogin(Users user,out Users resultUser)
@@ -65,9 +64,7 @@ namespace CRM_Nomenclatyre.Servises
                 return false;
             }
 
-            List_users.Add(user);
-            bool test = SqlService.SQL_User.AddTab_On(user);
-            return test;
+            return true;
 
         }
 
