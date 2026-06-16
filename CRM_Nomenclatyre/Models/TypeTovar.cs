@@ -11,13 +11,16 @@ namespace CRM_Nomenclatyre.Models
     [Table(name: "tab_TypeTovar")]
     public class TypeTovar
     {
+
         [Key]
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 
-        // Один тип товара — много артикулов
         public virtual ICollection<Articles> Articles { get; set; }
+
+
         public TypeTovar()
         {
             Articles = new HashSet<Articles>();

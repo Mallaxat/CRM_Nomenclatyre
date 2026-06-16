@@ -85,8 +85,18 @@
     <Compile Include="Migrations\202606131247144_var3.Designer.cs">
       <DependentUpon>202606131247144_var3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202606151447396_var4.cs" />
+    <Compile Include="Migrations\202606151447396_var4.Designer.cs">
+      <DependentUpon>202606151447396_var4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\TypeCommission.cs" />
     <Compile Include="Models\TypeTovar.cs" />
+    <Compile Include="Models\UnitArt.cs" />
+    <Compile Include="Pages\Unit\UnitPage.xaml.cs">
+      <DependentUpon>UnitPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Unit\VM_Unit.cs" />
     <Compile Include="Servises\SqlService.cs" />
     <Compile Include="Pages\Articuls\ArticulsPage.xaml.cs">
       <DependentUpon>ArticulsPage.xaml</DependentUpon>
@@ -103,6 +113,10 @@
     </Compile>
     <Compile Include="Windows\Registr\VM_Registr.cs" />
     <Page Include="Pages\Articuls\ArticulsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Unit\UnitPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202606131247144_var3.resx">
       <DependentUpon>202606131247144_var3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606151447396_var4.resx">
+      <DependentUpon>202606151447396_var4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

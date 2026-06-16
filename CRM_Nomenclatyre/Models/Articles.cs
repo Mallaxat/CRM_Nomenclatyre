@@ -29,6 +29,8 @@ namespace CRM_Nomenclatyre.Models
         [ForeignKey("ManagerId")]
         public virtual Managers Manager { get; set; }
 
+        public virtual UnitArt Unit {  get; set; }
+
         //Свойства артикула
         public string? Size { get; set; } = "0";
         public string  Barcod { get; set; }

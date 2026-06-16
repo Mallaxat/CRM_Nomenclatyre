@@ -13,9 +13,13 @@ namespace CRM_Nomenclatyre.Models
         public DbSet<Users> DbUsers { get; set; }
         public DbSet<Managers> DbManagers { get; set; }
         public DbSet<Articles> DbArticles { get; set; }
+        public DbSet<UnitArt> DbUnitArts { get; set; }
+        public DbSet<TypeTovar> DbTypeTovars { get; set; }
+        public DbSet<TypeCommission> DbTypeCommissions { get; set; }
 
         //Конструктор 
         public Context() : base("DB_MarketplaceMain") { }
+
 
 
     }
