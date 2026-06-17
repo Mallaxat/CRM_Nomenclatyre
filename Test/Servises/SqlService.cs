@@ -9,14 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
 namespace Test.Servises
 {
     enum TAB_NAME
     {
         tab_Article,
         tab_Manager,
-        tab_Users
+        tab_Users,
+        tab_TypeTovar
     }
 
     enum SQL_PROC
@@ -27,7 +27,8 @@ namespace Test.Servises
         GET_ARTICLES_BY_MANAGER,
         FIND_BAR,
         FIND_ARTICLE,
-        ADD_ARTICLE
+        ADD_ARTICLE,
+        CHECK_USER_LOGIN
 
 
     }
@@ -42,15 +43,31 @@ namespace Test.Servises
         private const string CONNECT = "DB_MarketplaceMain";
         private static string connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
 
-        public static DataSet UpdateTableBD(DataSet table, string tablename)
+        public static void UpdateTableBD(DataSet dataSet, string tableName,int id)
         {
-            adapter.Update(table, tablename);
-            dataTable.Clear();
-            adapter.Fill(table);
-            return table;
+
+            using (conn = new SqlConnection(connect))
+            {
+                conn.Open();
+                string sqlCommand = $"Select * from {tableName} where ManagerId={id}";
+                adapter = new SqlDataAdapter(sqlCommand, conn);
+
+                SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
+
+                DataTable table=dataSet.Tables[tableName];
+
+                dataTable=dataSet.Tables[tableName];
+                adapter.Update(table);
+                table.Clear();
+                adapter.Fill(dataSet,tableName);
+
+            }
+
+
         }
 
-        public static DataSet LoadBD(string tableName,int id)
+
+        public static DataSet LoadSetBD(string tableName, int id)
         {
             try
             {
@@ -74,6 +91,33 @@ namespace Test.Servises
 
             }
         }
+        public static DataTable LoadTableBD(string tableName, int id)
+        {
+            try
+            {
+                using (conn = new SqlConnection(connect))
+                {
+                    adapter = new SqlDataAdapter($"Select * from {tableName} where ManagerId={id}", conn);
+                    SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
+
+                    dataSet = new DataSet();
+                    adapter.Fill(dataSet, tableName);
+                    dataTable = dataSet.Tables[0];
+                    return dataTable;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                if (conn != null || conn.State == ConnectionState.Open) conn.Close();
+
+            }
+        }
+
+
 
         public static class SQL_User
         {
@@ -108,11 +152,11 @@ namespace Test.Servises
                 return result;
             }
             //ПРОБЛЕМА
-            public static bool AddTab_On(Users user)
+            public static void  AddTab_On(Users user)
             {
                 using (SqlConnection con= new SqlConnection(connect))
                 {
-                    int result = 0;
+                    
                     con.Open();
                     SqlCommand cmd=new SqlCommand(SQL_PROC.ADD_USER.ToString(), con);
                     cmd.CommandType= CommandType.StoredProcedure;
@@ -120,12 +164,26 @@ namespace Test.Servises
                     cmd.Parameters.AddWithValue("@Password", user.Password);
                     cmd.Parameters.AddWithValue("@FirstName", user.Manager.FirstName);
                     cmd.Parameters.AddWithValue("@LastName", user.Manager.LastName);
+                    cmd.ExecuteNonQuery();
 
-                    SqlParameter outPar=cmd.Parameters.Add("@Id",SqlDbType.Int);
+                }
+            }
+            public static bool Check_One(string login)
+            {
+                using (SqlConnection con = new SqlConnection(connect))
+                {
+                    int result = 0;
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(SQL_PROC.CHECK_USER_LOGIN.ToString(), con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Login", login);
+
+                    SqlParameter outPar = cmd.Parameters.Add("@Result", SqlDbType.Int);
                     outPar.Direction = ParameterDirection.Output;
 
-                    result = cmd.ExecuteNonQuery();
-                    //ВОТ ТУТ ПРОБЛЕМА ВСЕГДА ВОЗВРАЩАЕТСЯ -1!!!
+                   cmd.ExecuteNonQuery();
+                   result = Convert.ToInt32(outPar.Value);
+
                     return (result > 0) ? true : false;
                 }
             }
@@ -198,6 +256,38 @@ namespace Test.Servises
 
 
         }
+        public static class SQL_TypeTovar
+        {
+            public static List<TypeTovar> GetTab_Of()
+            {
+                using (conn = new SqlConnection(connect))
+                {
+                    List<TypeTovar> result = new List<TypeTovar>();
+                    conn.Open();
+                    string comand = $"Select * From {TAB_NAME.tab_TypeTovar.ToString()}";
+                    SqlDataAdapter adapter = new SqlDataAdapter(comand, conn);
+                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                    DataSet ds_tab = new DataSet();
+                    //Заполняем
+                    adapter.Fill(ds_tab);
+                    //Возьми первую таблицу из DataSet, но у меня там только 1 таблица и будет
+                    DataTable dt_tap = ds_tab.Tables[0];
+
+                    foreach (DataRow item in dt_tap.Rows)
+                    {
+                        result.Add(new TypeTovar
+                        {
+                            Name = item["Name"].ToString(),
+                            Id = Convert.ToInt32(item["Id"]),
+
+                        });
+                    }
+                    return result;
+                }
+
+            }
+        }
+        
     
         public static class SQL_Article
         {
@@ -219,7 +309,7 @@ namespace Test.Servises
                         {
                             Id = Convert.ToInt32(reader["id"]),
                             Named = reader["Named"].ToString(),
-                            Sort = reader["Sort"].ToString(),
+                            Sort = Convert.ToInt32(reader["Sort"]),
                             ManagerId = Convert.ToInt32(reader["ManagerId"]),
                             Size = reader["Size"].ToString(),
                             Barcod = reader["Barcod"].ToString(),
@@ -235,15 +325,18 @@ namespace Test.Servises
             public static bool FindBar(string bar)
             {
                 //Подключенный режим, чтобы не возникло ситуаций дубля баркода
-                using (conn = new SqlConnection(connect))
+                using (var bd= new Context())
                 {
+                    int result = bd.FIND_BAR(bar);
+/*                    conn.Open();
                     SqlCommand cmd = new SqlCommand(SQL_PROC.FIND_BAR.ToString(), conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Barcod", bar);
                     SqlParameter outPar = cmd.Parameters.Add("@Result", SqlDbType.Int);
                     outPar.Direction = ParameterDirection.Output;
 
-                    int result = cmd.ExecuteNonQuery();
+                    int result = cmd.ExecuteNonQuery();*/
+                       
                     return (result > 0) ? true : false;
 
                 }
@@ -253,9 +346,10 @@ namespace Test.Servises
                 //Подключенный режим, чтобы не возникло ситуаций дубля баркода
                 using (conn = new SqlConnection(connect))
                 {
+                    conn.Open();
                     SqlCommand cmd = new SqlCommand(SQL_PROC.FIND_ARTICLE.ToString(), conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Barcod", articule);
+                    cmd.Parameters.AddWithValue("@Articul", articule);
                     SqlParameter outPar = cmd.Parameters.Add("@Result", SqlDbType.Int);
                     outPar.Direction = ParameterDirection.Output;
 

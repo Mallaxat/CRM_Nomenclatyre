@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Test.Servises;
 
 namespace Test.Models
 {
@@ -17,7 +18,9 @@ namespace Test.Models
         [Required]
         public string Named { get; set; }
         [Required]
-        public string Sort { get; set; } //Это вид товара
+        public int Sort { get; set; }
+        [ForeignKey("Sort")]
+        public virtual TypeTovar TypeTovar { get; set; }
         // Внешний ключ на менеджера
         [Required]
         public int ManagerId { get; set; }
@@ -26,13 +29,19 @@ namespace Test.Models
         [ForeignKey("ManagerId")]
         public virtual Managers Manager { get; set; }
 
+        public virtual UnitArt Unit {  get; set; }
+
         //Свойства артикула
         public string Size { get; set; } = "0";
-        public string Barcod { get; set; }
-        public int Count { get; set; }
-        public string Articul { get; set; }
+        public string  Barcod { get; set; }
+        public int Count { get; set; }  
+        public string Articul {  get; set; }
+     
+        //конструктор
 
+    
         //Методы
+
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRM_Nomenclatyre.Servises;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,11 +12,15 @@ namespace CRM_Nomenclatyre.Pages
     public class VM_Unit : INotifyPropertyChanged
     {
         //Свойства
-
+        public Settings Setting {  get; set; }
         //Команда
 
         //Конструктор
+        public VM_Unit(Settings Setting)
+        {
+            this.Setting = Setting;
 
+        }
         //Методы
 
         //Интерфейс

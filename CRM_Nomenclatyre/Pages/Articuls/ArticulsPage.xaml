@@ -50,6 +50,7 @@
         </DataGrid>
         <Button Content="Обновить" Command="{Binding cUpdate}"
                 Grid.Column="1"  
-                HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Click"/>
+                HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Click" />
+        <Button Grid.Column="1" Content="Next" HorizontalAlignment="Left" Margin="407,10,0,0" VerticalAlignment="Top" Command="{Binding  cNext}"/>
     </Grid>
 </Page>

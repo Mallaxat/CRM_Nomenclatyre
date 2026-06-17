@@ -58,6 +58,7 @@ namespace CRM_Nomenclatyre.Windows
             {
                 exLogin();
             });
+
         }
 
 
@@ -78,7 +79,9 @@ namespace CRM_Nomenclatyre.Windows
             if (log.IsLogin(userbuf,out Setting.user))
             {
                 Setting.serviseMessege.Show("Вход успешный", "Вход");
-                Setting.serviseWindow.WindowOpenAndClose<MainWindow>(new VM_Main(Setting));
+                VM_Main main = VM_Main.Initialize(Setting);
+                Setting.serviseWindow.WindowOpenAndClose<MainWindow>(main);
+
             } 
             else Setting.serviseMessege.Show("Не верный логин или пароль", "Вход");
         }
@@ -90,5 +93,7 @@ namespace CRM_Nomenclatyre.Windows
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
         }
+
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CRM_Nomenclatyre.Models;
 using CRM_Nomenclatyre.Servises;
+using CRM_Nomenclatyre.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -81,6 +82,7 @@ namespace CRM_Nomenclatyre.Pages
 
         //Команды
         public ICommand cUpdate { get; }
+        public ICommand cNext { get; }
         
         //Коснтруктор
         public VM_Articuls(Settings Setting)
@@ -97,11 +99,48 @@ namespace CRM_Nomenclatyre.Pages
             {
                 UpdateDataSet();
             });
+
+            cNext = new RelayCommand(_ =>
+            {            
+                VM_Main main = VM_Main.Initialize(Setting);
+                main.UpdatePage(Setting.serviseWindow.PageOpen<VM_Unit, UnitPage>(Setting));
+              
+            });
         }
         //Методы
         private void UpdateDataSet()
         {
-            SqlService.UpdateTableBD(ListDataSet, TABLENAME,Setting.user.Id);
+            if (ChechNull()) SqlService.UpdateTableBD(ListDataSet, TABLENAME, Setting.user.Id);
+            else
+            {
+                Setting.serviseMessege.Show("Заполнены не все столбцы","Ошибка ввода");
+                return;
+            }
+        }
+         
+        private bool ChechNull()
+        {
+            if (ListDataTable.AsEnumerable().Any(row => row.IsNull("Named"))) return false;
+            if (ListDataTable.AsEnumerable().Any(row => row.IsNull("Sort"))) return false;
+            if (ListDataTable.AsEnumerable().Any(row => row.IsNull("Size"))) return false;
+            return true;
+        }
+        private void SetNums()
+        {
+            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Barcod.ToString()))
+            {
+                ListDataTable.Columns[TabNameArticle.Barcod.ToString()].DefaultValue = Settings.Rand(12);
+            }
+
+            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Articul.ToString()))
+            {
+                ListDataTable.Columns[TabNameArticle.Articul.ToString()].DefaultValue = Settings.Rand(5, false);
+            }
+
+            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.ManagerId.ToString()))
+            {
+                ListDataTable.Columns[TabNameArticle.ManagerId.ToString()].DefaultValue = Setting.user.Id;
+            }
         }
 
 
@@ -113,23 +152,6 @@ namespace CRM_Nomenclatyre.Pages
         }
 
 
-        private void SetNums()
-        {
-            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Barcod.ToString())) 
-            { 
-                ListDataTable.Columns[TabNameArticle.Barcod.ToString()].DefaultValue = Settings.Rand(12); 
-            }
-
-            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Articul.ToString())) 
-            { 
-                ListDataTable.Columns[TabNameArticle.Articul.ToString()].DefaultValue = Settings.Rand(5, false);
-            }
-
-            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.ManagerId.ToString()))
-            {
-                ListDataTable.Columns[TabNameArticle.ManagerId.ToString()].DefaultValue = Setting.user.Id;
-            }
-        }
 
 
     }

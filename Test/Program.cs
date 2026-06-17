@@ -13,7 +13,7 @@ namespace Test
     internal class Program
     {
 
-        public static void CreateBD()
+/*        public static void CreateBD()
         {
             using (var db = new Context())
             {
@@ -41,7 +41,7 @@ namespace Test
                 Console.WriteLine($"User Id: {user.Id}");
                 Console.WriteLine($"Manager UserId: {user.Manager.UserId}");
             }
-        }
+        }*/
 
         private static string CreateNums(int count)
         {
@@ -91,30 +91,35 @@ namespace Test
                             Console.WriteLine($"{i.Id} {i.Login} {i.Manager.LastName}");
                         }
             */
+            /*
+                        Articles art = new Articles
+                        {
+                            Named="tovar3",
+                            Sort="type3",
+                            ManagerId=1,
+                            Size="L",
+                            Barcod="000000000000",
+                            Count=4,
+                            Articul="11111"
 
-            Articles art = new Articles
-            {
-                Named="tovar3",
-                Sort="type3",
-                ManagerId=1,
-                Size="L",
-                Barcod="000000000000",
-                Count=4,
-                Articul="11111"
+                        };
 
-            };
+                        DataSet Dat= new DataSet();
 
-            DataSet Dat= new DataSet();
+                        Console.WriteLine("Обновление");
 
-            Console.WriteLine("Обновление");
+                        Dat = SqlService. LoadBD("tab_Article",0);
 
-            Dat = SqlService. LoadBD("tab_Article",0);
+                        DataTable Tab = Dat.Tables[0];
+                        foreach (DataRow item in Tab.Rows)
+                        {
+                            Console.WriteLine($"{item[0].ToString()} {item[1].ToString()} {item[2].ToString()}");
+                        }*/
 
-            DataTable Tab = Dat.Tables[0];
-            foreach (DataRow item in Tab.Rows)
-            {
-                Console.WriteLine($"{item[0].ToString()} {item[1].ToString()} {item[2].ToString()}");
-            }
+
+            Console.WriteLine(SqlService.SQL_Article.FindBar("260721472331"));
+
+
         }
     }
 }

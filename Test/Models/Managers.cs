@@ -20,11 +20,8 @@ namespace Test.Models
         public string LastName { get; set; }
         // Один менеджер — много артикулов
         public ICollection<Articles> articles { get; set; }
-        // Связь с пользователем
-        [Required]
-        public virtual Users User { get; set; }
-        // Id менеджера = Id пользователя
 
+        public virtual Users User { get; set; }
 
     }
 }

@@ -28,6 +28,8 @@
             
             
         </DataGrid>
+        <DataGrid x:Name="dg_Unit"
+            Grid.Column="1" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"/>
 
     </Grid>
 </Page>

@@ -325,18 +325,10 @@ namespace CRM_Nomenclatyre.Servises
             public static bool FindBar(string bar)
             {
                 //Подключенный режим, чтобы не возникло ситуаций дубля баркода
-                using (conn = new SqlConnection(connect))
+                using (var bd = new Context())
                 {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand(SQL_PROC.FIND_BAR.ToString(), conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Barcod", bar);
-                    SqlParameter outPar = cmd.Parameters.Add("@Result", SqlDbType.Int);
-                    outPar.Direction = ParameterDirection.Output;
-
-                    int result = cmd.ExecuteNonQuery();
+                    int result = bd.FIND_BAR(bar);
                     return (result > 0) ? true : false;
-
                 }
             }
             public static bool FindArticule(string articule)

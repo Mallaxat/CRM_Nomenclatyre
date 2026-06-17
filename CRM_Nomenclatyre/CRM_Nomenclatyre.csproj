@@ -89,6 +89,14 @@
     <Compile Include="Migrations\202606151447396_var4.Designer.cs">
       <DependentUpon>202606151447396_var4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202606160742298_contexttest.cs" />
+    <Compile Include="Migrations\202606160742298_contexttest.Designer.cs">
+      <DependentUpon>202606160742298_contexttest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202606160751568_CheckModel.cs" />
+    <Compile Include="Migrations\202606160751568_CheckModel.Designer.cs">
+      <DependentUpon>202606160751568_CheckModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\TypeCommission.cs" />
     <Compile Include="Models\TypeTovar.cs" />
@@ -175,6 +183,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202606151447396_var4.resx">
       <DependentUpon>202606151447396_var4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606160742298_contexttest.resx">
+      <DependentUpon>202606160742298_contexttest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606160751568_CheckModel.resx">
+      <DependentUpon>202606160751568_CheckModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
