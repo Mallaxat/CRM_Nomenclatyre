@@ -21,15 +21,22 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
-        <DataGrid x:Name="dg_unit"
-                   Grid.Column="1" Grid.Row="1"
-                   CanUserAddRows="True" CanUserDeleteRows="True">
 
+        <DataGrid x:Name="dg_Unit"
+                  Grid.Column="1" Grid.Row="1" 
+                  SelectedItem="{Binding SelectRow}"
+                  ItemsSource="{Binding TableValue}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Себестоимость" Binding="{Binding CostPrice, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Логистика" Binding="{Binding Logistics, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Комиссия" Binding="{Binding Comission, UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>
             
             
         </DataGrid>
-        <DataGrid x:Name="dg_Unit"
-            Grid.Column="1" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"/>
 
     </Grid>
 </Page>

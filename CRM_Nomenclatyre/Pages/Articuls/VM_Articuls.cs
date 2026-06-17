@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.Linq;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;

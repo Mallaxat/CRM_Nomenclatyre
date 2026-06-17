@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Linq;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Documents;
 
 namespace CRM_Nomenclatyre.Servises
 {
@@ -42,6 +43,15 @@ namespace CRM_Nomenclatyre.Servises
 
         private const string CONNECT = "DB_MarketplaceMain";
         private static string connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
+
+        public static List<T> GetDataSet<T>() where T: class
+        {
+            using (DataContext db = new DataContext(connect))
+            {
+                return db.GetTable<T>().ToList();
+            }
+        }
+
 
         public static void UpdateTableBD(DataSet dataSet, string tableName,int id)
         {
