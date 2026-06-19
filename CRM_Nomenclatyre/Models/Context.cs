@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace CRM_Nomenclatyre.Models
 {
     public class Context:DbContext

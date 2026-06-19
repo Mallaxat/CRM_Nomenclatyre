@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using CRM_Nomenclatyre.Servises;
 
+
 namespace CRM_Nomenclatyre.Servises
 {
 
@@ -23,7 +24,7 @@ namespace CRM_Nomenclatyre.Servises
 
         public Logging() 
         {
-            List_users = SqlService.SQL_User.GetTab_Of();
+            List_users = SqlService.GetDataSet<Users>();
         }
         public bool IsLogin(Users user,out Users resultUser)
         {

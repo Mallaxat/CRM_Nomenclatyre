@@ -51,8 +51,6 @@ namespace CRM_Nomenclatyre.Servises
                 return db.GetTable<T>().ToList();
             }
         }
-
-
         public static void UpdateTableBD(DataSet dataSet, string tableName,int id)
         {
 
@@ -131,7 +129,7 @@ namespace CRM_Nomenclatyre.Servises
 
         public static class SQL_User
         {
-            public static List<Users> GetTab_Of()
+/*            public static List<Users> GetTab_Of()
             {
                 List<Users> result = new List<Users>();
 
@@ -160,8 +158,8 @@ namespace CRM_Nomenclatyre.Servises
                     });
                 }
                 return result;
-            }
-            //ПРОБЛЕМА
+            }*/
+   
             public static void  AddTab_On(Users user)
             {
                 using (SqlConnection con= new SqlConnection(connect))
@@ -230,7 +228,6 @@ namespace CRM_Nomenclatyre.Servises
                     return result;
                 }
             }
-
             public static Managers GetOne_Of(int id)
             {
                 using (conn = new SqlConnection(connect))
