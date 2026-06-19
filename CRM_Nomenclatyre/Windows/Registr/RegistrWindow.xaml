@@ -52,7 +52,7 @@
         <Button x:Name="bt_Reg" Content="Регистрация" 
                  Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"
                 HorizontalAlignment="Center" VerticalAlignment="Top"
-                Command="{Binding cAddUser}" Click="bt_Reg_Click"/>
+                Command="{Binding cRegistration}" Click="bt_Reg_Click"/>
 
 
 

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Data.Entity;
 
 
 namespace CRM_Nomenclatyre.Servises
@@ -33,6 +34,14 @@ namespace CRM_Nomenclatyre.Servises
                     return result;
                 }
             }
+            ///Метод, для получения связки юзер+менеджер
+            public static Users GetFullUser(Users user)
+            {
+                using (var db = new Context())
+                {
+                    return db.DbUsers.Include(m=>m.Manager).FirstOrDefault(u=>u.Id==user.Id);
+                }
+            }
 
             public static bool FindUser(Users user)
             {
@@ -40,6 +49,17 @@ namespace CRM_Nomenclatyre.Servises
                 return true;
 
             }
+            public static bool AddUser(Users user)
+            {
+                using (var db = new Context())
+                {
+                    db.DbUsers.Add(user);
+                    db.SaveChanges();
+                    return FindUser(user);
+                }
+                  
+            }
+
         }
 
 

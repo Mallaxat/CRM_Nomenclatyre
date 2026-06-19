@@ -64,7 +64,7 @@ namespace CRM_Nomenclatyre.Windows.Registr
 
         //Команды
 
-        public ICommand cAddUser {  get;}
+        public ICommand cRegistration {  get;}
 
 
         //Коснтруктор
@@ -72,48 +72,49 @@ namespace CRM_Nomenclatyre.Windows.Registr
         { 
             this.Setting = setting;
 
-            cAddUser = new RelayCommand(_ =>
+            cRegistration = new RelayCommand(_ =>
             {
-                Users us=AddUser();
-                bool result = SqlService.SQL_User.Check_One(us.Login);
-
-/*               if (SqlService.SQL_User.Check_One(us.Login))
-                {
-                   // SqlService.SQL_User.AddTab_On(us);
-                    Setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
-
-                }
-                else Setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");*/
+                Regist();
             });
         }
         //Методы
+        public void Regist()
+        {
+           Users userNow = AddUser();
+
+            if (Logging.IsRegist(userNow))
+            {
+                Setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
+
+            }
+            else Setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");
+
+        }
+
         public Users AddUser()
         {
 
             if(IsEmpty(Login) || IsEmpty(Password) ||
                IsEmpty(FirstName)|| IsEmpty(LastName)) return null;
 
-            Managers _manager = new Managers
-            {
-                FirstName = this.FirstName,
-                LastName = this.LastName, 
-            };
             Users _user = new Users
             {
                 Login = this.Login,
                 Password = this.Password, 
-                Manager = men
+                Manager= new Managers
+                {
+                    FirstName = this.FirstName,
+                    LastName = this.LastName,
+                }
             };
-            _manager.User = _user;
+
             return _user;
         }
 
-         private bool IsEmpty<T>(T value)
+        private bool IsEmpty<T>(T value)
         {
             return value == null;
         }
-
-
 
 
         //Интерфейс
