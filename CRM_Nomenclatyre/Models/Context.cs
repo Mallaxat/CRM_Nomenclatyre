@@ -22,41 +22,5 @@ namespace CRM_Nomenclatyre.Models
         //Конструктор 
         public Context() : base("DB_MarketplaceMain") { }
 
-        //Процедуры?
-
-        public virtual int FIND_BAR(string bar)
-        {
-
-            var cmd = this.Database.Connection.CreateCommand();
-            cmd.CommandText = "FIND_BAR";
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            //Это тернарный оператор, если не пустой создаем параметр, если пустой создаем параметр с типом данных
-            // Входной параметр @Barcod
-            var BarParametr = cmd.CreateParameter();
-            BarParametr.ParameterName = "@Barcod";
-            BarParametr.Value = (object)bar ?? DBNull.Value;
-            cmd.Parameters.Add(BarParametr);
-
-            var ResultParametr = cmd.CreateParameter();
-            ResultParametr.ParameterName = "@Result";
-            ResultParametr.DbType = DbType.Int32;
-            ResultParametr.Direction = ParameterDirection.Output;
-            cmd.Parameters.Add(ResultParametr);
-
-            // Вызываем процедуру
-            // Открываем подключение, если оно закрыто
-            if (this.Database.Connection.State != ConnectionState.Open)
-            {
-                this.Database.Connection.Open();
-            }
-
-            // Выполняем процедуру
-            cmd.ExecuteNonQuery();
-
-            //возвращение результата
-            return Convert.ToInt32(ResultParametr.Value);
-
-        }
     }
 }

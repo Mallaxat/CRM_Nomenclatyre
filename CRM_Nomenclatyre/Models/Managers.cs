@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 
 namespace CRM_Nomenclatyre.Models
-{
-       [Table(name: "tab_Manager")]
+
         public class Managers
         {
             //Свойства

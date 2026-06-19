@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 
 namespace CRM_Nomenclatyre.Models
 {
-
-    [Table(name: "tab_TypeCommission")]
     public class TypeCommission
     {
         [Key]

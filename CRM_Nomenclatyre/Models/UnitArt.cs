@@ -11,8 +11,6 @@ using System.Data.Linq.Mapping;
 
 namespace CRM_Nomenclatyre.Models
 {
-
-    [Table(Name = "dbo.tab_UnitArt")]
     public class UnitArt
     {
         [Column(Name = "Id", IsPrimaryKey = true)]

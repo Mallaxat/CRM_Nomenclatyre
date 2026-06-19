@@ -10,7 +10,6 @@ using System.Xml.Linq;
 
 namespace CRM_Nomenclatyre.Models
 {
-    [Table(name: "tab_Article")]
     public class Articles
     {
         //Свойства
