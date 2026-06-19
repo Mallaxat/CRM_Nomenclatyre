@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 
 namespace CRM_Nomenclatyre.Models
+{ 
 
         public class Managers
         {
