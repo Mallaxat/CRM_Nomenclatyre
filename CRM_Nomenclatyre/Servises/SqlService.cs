@@ -129,37 +129,38 @@ namespace CRM_Nomenclatyre.Servises
 
         public static class SQL_User
         {
-/*            public static List<Users> GetTab_Of()
-            {
-                List<Users> result = new List<Users>();
-
-                SqlDataAdapter adapter = new SqlDataAdapter(SQL_PROC.GET_USER.ToString(), connect);
-                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-                DataSet ds_tab = new DataSet();
-                //Заполняем
-                adapter.Fill(ds_tab);
-                //Возьми первую таблицу из DataSet, но у меня там только 1 таблица и будет
-                DataTable dt_tap = ds_tab.Tables[0];
-
-                foreach (DataRow item in dt_tap.Rows)
-                {
-                    result.Add(new Users
-                    {
-                        Id = Convert.ToInt32(item[0]),
-                        Login = item["Login"].ToString(),
-                        Password = item["Password"].ToString(),
-                        //Проверяем, что у пользователя нет менеджера
-                        Manager = item["UserId"] == DBNull.Value ? null : new Managers
+            //ADO
+            /*            public static List<Users> GetTab_Of()
                         {
-                            UserId = Convert.ToInt32(item["UserId"]),
-                            FirstName = item["FirstName"].ToString(),
-                            LastName = item["LastName"].ToString()
-                        }
-                    });
-                }
-                return result;
-            }*/
-   
+                            List<Users> result = new List<Users>();
+
+                            SqlDataAdapter adapter = new SqlDataAdapter(SQL_PROC.GET_USER.ToString(), connect);
+                            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                            DataSet ds_tab = new DataSet();
+                            //Заполняем
+                            adapter.Fill(ds_tab);
+                            //Возьми первую таблицу из DataSet, но у меня там только 1 таблица и будет
+                            DataTable dt_tap = ds_tab.Tables[0];
+
+                            foreach (DataRow item in dt_tap.Rows)
+                            {
+                                result.Add(new Users
+                                {
+                                    Id = Convert.ToInt32(item[0]),
+                                    Login = item["Login"].ToString(),
+                                    Password = item["Password"].ToString(),
+                                    //Проверяем, что у пользователя нет менеджера
+                                    Manager = item["UserId"] == DBNull.Value ? null : new Managers
+                                    {
+                                        UserId = Convert.ToInt32(item["UserId"]),
+                                        FirstName = item["FirstName"].ToString(),
+                                        LastName = item["LastName"].ToString()
+                                    }
+                                });
+                            }
+                            return result;
+                        }*/
+
             public static void  AddTab_On(Users user)
             {
                 using (SqlConnection con= new SqlConnection(connect))
@@ -201,7 +202,8 @@ namespace CRM_Nomenclatyre.Servises
         }
         public static class SQL_Manager
         {
-            public static List<Managers> GetTab_Of()
+            //ADO
+            /*            public static List<Managers> GetTab_Of()
             {
                 using (conn = new SqlConnection(connect))
                 {
@@ -227,7 +229,7 @@ namespace CRM_Nomenclatyre.Servises
                     }
                     return result;
                 }
-            }
+            }*/
             public static Managers GetOne_Of(int id)
             {
                 using (conn = new SqlConnection(connect))

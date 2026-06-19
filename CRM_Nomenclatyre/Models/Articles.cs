@@ -46,6 +46,7 @@ namespace CRM_Nomenclatyre.Models
         public Articles()
         {
             _manager = new EntityRef<Managers>();
+            _typeTovar = new EntityRef<TypeTovar>();
         }
 
         [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
@@ -83,6 +84,19 @@ namespace CRM_Nomenclatyre.Models
         {
             get { return _manager.Entity; }
             set { _manager.Entity = value; }
+        }
+        private EntityRef<TypeTovar> _typeTovar;
+
+        [Association(
+            Storage = "_typeTovar",
+            ThisKey = "Sort",
+            OtherKey = "Id",
+            IsForeignKey = true
+        )]
+        public TypeTovar TypeTovar
+        {
+            get { return _typeTovar.Entity; }
+            set { _typeTovar.Entity = value; }
         }
     }
 }
