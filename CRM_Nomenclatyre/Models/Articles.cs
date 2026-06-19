@@ -1,9 +1,8 @@
 ﻿using CRM_Nomenclatyre.Servises;
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
-using System.Data.Linq.Mapping;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -11,33 +10,35 @@ using System.Xml.Linq;
 
 namespace CRM_Nomenclatyre.Models
 {
-      [Table(Name = "dbo.tab_Article")]
-      public class Articles
-      {
-          [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
-          public int Id { get; set; }
+    [Table(name: "tab_Article")]
+    public class Articles
+    {
+        //Свойства
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string Named { get; set; }
+        [Required]
+        public int Sort { get; set; }
+        [ForeignKey("Sort")]
+        public virtual TypeTovar TypeTovar { get; set; }
+        // Внешний ключ на менеджера
+        [Required]
+        public int ManagerId { get; set; }
 
-          [Column(Name = "Named", CanBeNull = false)]
-          public string Named { get; set; }
+        // Навигационное свойство
+        [ForeignKey("ManagerId")]
+        public virtual Managers Manager { get; set; }
 
-          [Column(Name = "Sort", CanBeNull = false)]
-          public int Sort { get; set; }
+        public virtual UnitArt Unit { get; set; }
 
-          [Column(Name = "ManagerId", CanBeNull = false)]
-          public int ManagerId { get; set; }
+        //Свойства артикула
+        public string? Size { get; set; } = "0";
+        public string Barcod { get; set; }
+        public int Count { get; set; }
+        public string Articul { get; set; }
 
-          [Column(Name = "Size", CanBeNull = true)]
-          public string Size { get; set; } = "0";
 
-          [Column(Name = "Barcod", CanBeNull = true)]
-          public string Barcod { get; set; }
-
-          [Column(Name = "Count", CanBeNull = false)]
-          public int Count { get; set; }
-
-          [Column(Name = "Articul", CanBeNull = true)]
-          public string Articul { get; set; }
-      }
-
+    }
 }
 
