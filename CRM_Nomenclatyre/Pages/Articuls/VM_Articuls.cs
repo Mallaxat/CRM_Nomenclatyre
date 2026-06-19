@@ -89,16 +89,16 @@ namespace CRM_Nomenclatyre.Pages
         public VM_Articuls(Settings Setting)
         {
             this.Setting = Setting;
-            ListDataSet = SqlService.LoadSetBD(TABLENAME, Setting.user.Id);
-            ListDataTable = ListDataSet.Tables[0];
-            TypeList = SqlService.SQL_TypeTovar.GetTab_Of();
+            //ListDataSet = SqlService.LoadSetBD(TABLENAME, Setting.user.Id);
+            //ListDataTable = ListDataSet.Tables[0];
+           // TypeList = SqlService.SQL_TypeTovar.GetTab_Of();
 
             //Вносим дефолтное значение для менеджера
 
             SetNums();
             cUpdate = new RelayCommand(_ =>
             {
-                UpdateDataSet();
+                //UpdateDataSet();
             });
 
             cNext = new RelayCommand(_ =>
@@ -109,15 +109,15 @@ namespace CRM_Nomenclatyre.Pages
             });
         }
         //Методы
-        private void UpdateDataSet()
+/*        private void UpdateDataSet()
         {
-            if (ChechNull()) SqlService.UpdateTableBD(ListDataSet, TABLENAME, Setting.user.Id);
+           if (ChechNull()) SqlService.UpdateTableBD(ListDataSet, TABLENAME, Setting.user.Id);
             else
             {
                 Setting.serviseMessege.Show("Заполнены не все столбцы","Ошибка ввода");
                 return;
             }
-        }
+        }*/
          
         private bool ChechNull()
         {

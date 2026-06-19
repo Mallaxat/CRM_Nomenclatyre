@@ -70,20 +70,20 @@ namespace CRM_Nomenclatyre.Windows.Registr
         //Коснтруктор
         public VM_Registr(Settings setting)
         { 
-            Logging log=new Logging();
             this.Setting = setting;
+
             cAddUser = new RelayCommand(_ =>
             {
                 Users us=AddUser();
                 bool result = SqlService.SQL_User.Check_One(us.Login);
 
-                if (SqlService.SQL_User.Check_One(us.Login))
+/*               if (SqlService.SQL_User.Check_One(us.Login))
                 {
-                    SqlService.SQL_User.AddTab_On(us);
+                   // SqlService.SQL_User.AddTab_On(us);
                     Setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
 
                 }
-                else Setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");
+                else Setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");*/
             });
         }
         //Методы
@@ -93,19 +93,19 @@ namespace CRM_Nomenclatyre.Windows.Registr
             if(IsEmpty(Login) || IsEmpty(Password) ||
                IsEmpty(FirstName)|| IsEmpty(LastName)) return null;
 
-            Managers men = new Managers
+            Managers _manager = new Managers
             {
                 FirstName = this.FirstName,
                 LastName = this.LastName, 
             };
-            Users us = new Users
+            Users _user = new Users
             {
                 Login = this.Login,
                 Password = this.Password, 
                 Manager = men
             };
-            men.User = us;
-            return us;
+            _manager.User = _user;
+            return _user;
         }
 
          private bool IsEmpty<T>(T value)

@@ -18,56 +18,15 @@ using CRM_Nomenclatyre.Servises;
 namespace CRM_Nomenclatyre.Servises
 {
 
-    public  class Logging
+    public static class Logging
     {
-        List<Users> List_users { get; set; }
-
-        public Logging() 
+        //Метод, для проверки наличия и входа
+        public static bool IsLogin(Users user)
         {
-            List_users = SqlService.GetDataSet<Users>();
-        }
-        public bool IsLogin(Users user,out Users resultUser)
-        {
-            if (List_users == null)
-            {
-                resultUser = null;
-                return false;
-            }
-            
-            //Отключенный режим
-            foreach(var item in List_users)
-            {
-                if (item.Login == user.Login && item.Password == user.Password) 
-                {
-                    resultUser= item;
-                    resultUser.Manager = SqlService.SQL_Manager.GetOne_Of(resultUser.Id);
-                    return true; 
-                }
-            }
-            resultUser = null;
+            if (SqlService.UserSQL.FindUser(user)) return true;
             return false;
         }
-        public bool IsLogin(Users user)
-        {
-            if (List_users == null) return false;
-
-            foreach (var item in List_users)
-            {
-                if (item.Login == user.Login) 
-                    return false;
-            }
-            return true;
-        }
-        public  bool Regist(Users user)
-        {
-            if (!IsLogin(user))
-            {
-                return false;
-            }
-
-            return true;
-
-        }
+        
 
 
 

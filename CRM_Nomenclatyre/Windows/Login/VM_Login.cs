@@ -66,22 +66,20 @@ namespace CRM_Nomenclatyre.Windows
         
         private void exLogin()
         {
-            Logging log = new Logging();
             OnPropertyChanged("Login");
             OnPropertyChanged("Password");
 
-            Users userbuf = new Users
+            Users userNow = new Users
             {
                 Login = _login,
                 Password = _password
             };
 
-            if (log.IsLogin(userbuf,out Setting.user))
+            if (Logging.IsLogin(userNow))
             {
                 Setting.serviseMessege.Show("Вход успешный", "Вход");
                 VM_Main main = VM_Main.Initialize(Setting);
                 Setting.serviseWindow.WindowOpenAndClose<MainWindow>(main);
-
             } 
             else Setting.serviseMessege.Show("Не верный логин или пароль", "Вход");
         }

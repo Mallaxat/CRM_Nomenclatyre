@@ -72,7 +72,7 @@ namespace CRM_Nomenclatyre.Pages
         public VM_Unit(Settings Setting)
         {
             this.Setting = Setting;
-            TableValue = SqlService.GetDataSet<UnitArt>();
+            //TableValue = SqlService.GetDataSet<UnitArt>();
         }
         //Методы
 
