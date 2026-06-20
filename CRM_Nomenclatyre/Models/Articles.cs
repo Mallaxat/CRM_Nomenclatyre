@@ -33,9 +33,9 @@ namespace CRM_Nomenclatyre.Models
 
         //Свойства артикула
         public string? Size { get; set; } = "0";
-        public string Barcod { get; set; }
+        public string Barcod { get; set; } = mSettings.Rand(12);
         public int Count { get; set; }
-        public string Articul { get; set; }
+        public string Articul { get; set; } = mSettings.Rand(5,false);
 
 
     }

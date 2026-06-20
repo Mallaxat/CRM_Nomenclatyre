@@ -24,6 +24,31 @@ namespace CRM_Nomenclatyre.Servises
         private const string CONNECT = "DB_MarketplaceMain";
         private static string connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
 
+        public static void UpdateArticles(List<Articles> listArticles)
+        {
+            using (var db=new Context())
+            {
+                var bufList=db.DbArticles.ToList();
+                foreach (var item in listArticles)
+                {
+                    if (bufList.Contains(item)) continue;
+                    else
+                    {
+                        item.Unit = new UnitArt
+                        {
+                            CostPrice = 0,
+                            Price=0,
+                            Logistics=0
+                        };
+
+                        db.DbArticles.Add(item);
+                    }
+                }
+                db.SaveChanges();
+            }
+        }
+
+
         public static class UserSQL
         {
             public static Users GetUser(Users user)
@@ -63,7 +88,7 @@ namespace CRM_Nomenclatyre.Servises
         }
         public static class ArticulSQL
         {
-            public static List<Articles> GetTabArticuls(int id)
+           public static List<Articles> GetArticuls(int id)
             {
                 using (var db = new Context())
                 {
@@ -73,72 +98,25 @@ namespace CRM_Nomenclatyre.Servises
                 }
             }
 
-            public static void Article(Articles article,int idManager)
+            public static bool FindBarcode(string bar)
             {
-                Articles result = new Articles
+                using(var db = new Context())
                 {
-                    Named = article.Named,
-                    Sort=article.Sort,
-                    TypeTovar=article.TypeTovar,
-                    ManagerId= idManager,
-                    Unit= new UnitArt
-                    {
-                        Logistics = 0,
-                        CostPrice = 0,
-                        Price = 0,
-                    },
-                    Size=article.Size,
-                    Barcod=article.Barcod,
-                    Count=article.Count,
-                    Articul=article.Articul
-                };
-   
-                using (var db =new Context())
-                {
-                    db.DbArticles.Add(article);
-                    db.SaveChanges();
+                    if(db.DbArticles.FirstOrDefault(x=>x.Barcod==bar)==null) return false;
+                    return true;
                 }
             }
-
-            public static void UpdateListArticles(List<Articles> list,int ID)
+            public static bool FindArticul(string art)
             {
                 using (var db = new Context())
                 {
-                    var listArt = db.DbArticles.Include(x => x.Unit).Where(x => x.ManagerId == ID).ToList();
-
-                    if (list.Count() <= listArt.Count()) return;
-                    foreach (var article in list)
-                    {
-                        if (!listArt.Contains(article))
-                        {
-                            Articles result = new Articles
-                            {
-                                Named = article.Named,
-                                Sort = article.Sort,
-                                TypeTovar = article.TypeTovar,
-                                ManagerId = ID,
-                                Unit = new UnitArt
-                                {
-                                    Logistics = 0,
-                                    CostPrice = 0,
-                                    Price = 0,
-                                },
-                                Size = article.Size,
-                                Barcod = article.Barcod,
-                                Count = article.Count,
-                                Articul = article.Articul
-                            };
-
-                            db.DbArticles.Add(result);
-                            db.SaveChanges();  
-                        }
-                    }
-
+                    if (db.DbArticles.FirstOrDefault(x => x.Articul == art) == null) return false;
+                    return true;
                 }
-      
             }
 
 
+  
 
         }
 

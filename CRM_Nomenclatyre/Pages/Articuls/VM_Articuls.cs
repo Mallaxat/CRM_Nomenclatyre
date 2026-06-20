@@ -33,30 +33,6 @@ namespace CRM_Nomenclatyre.Pages
         private const string TABLENAME = "tab_Article";
         private mSettings _setting { get; set; }
 
-        private DataSet _listDataSet;
-        public DataSet ListDataSet
-        {
-            get => _listDataSet;
-            set
-            {
-                if (value == null) return;
-                _listDataSet = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DataTable _listDataTabe;
-        public DataTable ListDataTable
-        {
-            get => _listDataTabe;
-            set
-            {
-                if (value == null) return;
-                _listDataTabe = value;
-                OnPropertyChanged();
-            }
-        }
-
         private List<Articles> _listarticles;
 
         public List<Articles> ListArticles
@@ -105,11 +81,12 @@ namespace CRM_Nomenclatyre.Pages
         public VM_Articuls(mSettings _setting)
         {
             this._setting = _setting;
-            ListArticles = SqlService.ArticulSQL.GetTabArticuls(_setting.user.Id);
-            SetNums();
+            ListArticles = SqlService.ArticulSQL.GetArticuls(_setting.user.Id);
+            //SetNums();
 
             cUpdate = new RelayCommand(_ =>
             {
+
                 UpdateDataSet();
             });
 
@@ -122,40 +99,9 @@ namespace CRM_Nomenclatyre.Pages
         //Методы
        private void UpdateDataSet()
         {
-            /*         if (ChechNull()) SqlService.UpdateTableBD(ListDataSet, TABLENAME, Setting.user.Id);
-                      else
-                      {
-                          Setting.serviseMessege.Show("Заполнены не все столбцы","Ошибка ввода");
-                          return;
-                      }*/
 
-            SqlService.ArticulSQL.UpdateListArticles(ListArticles, _setting.user.Id);
+            SqlService.UpdateArticles(ListArticles);
 
-        }
-         
-        private bool ChechNull()
-        {
-            if (ListDataTable.AsEnumerable().Any(row => row.IsNull("Named"))) return false;
-            if (ListDataTable.AsEnumerable().Any(row => row.IsNull("Sort"))) return false;
-            if (ListDataTable.AsEnumerable().Any(row => row.IsNull("Size"))) return false;
-            return true;
-        }
-        private void SetNums()
-        {
-            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Barcod.ToString()))
-            {
-                ListDataTable.Columns[TabNameArticle.Barcod.ToString()].DefaultValue = mSettings.Rand(12);
-            }
-
-            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Articul.ToString()))
-            {
-                ListDataTable.Columns[TabNameArticle.Articul.ToString()].DefaultValue = mSettings.Rand(5, false);
-            }
-
-            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.ManagerId.ToString()))
-            {
-                ListDataTable.Columns[TabNameArticle.ManagerId.ToString()].DefaultValue = _setting.user.Id;
-            }
         }
 
         //Интерфейс

@@ -52,13 +52,13 @@ namespace CRM_Nomenclatyre.Servises
                 }
                if(var)
                 {
-                    //if (!SqlService.SQL_Article.FindBar(result)) 
+                    if (!SqlService.ArticulSQL.FindBarcode(result)) 
                         return result;
 
                 }
                 else 
                 {
-                   //if (!SqlService.SQL_Article.FindArticule(result)) 
+                    if (!SqlService.ArticulSQL.FindArticul(result))
                         return result;
                 }
             }
