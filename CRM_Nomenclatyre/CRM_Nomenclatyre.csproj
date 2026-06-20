@@ -148,7 +148,7 @@
     <Compile Include="Interface\IntMassege.cs" />
     <Compile Include="Servises\MessageeServise.cs" />
     <Compile Include="Servises\RelayCommand.cs" />
-    <Compile Include="Servises\Settings.cs" />
+    <Compile Include="Servises\mSettings.cs" />
     <Compile Include="Servises\WindowService.cs" />
     <Compile Include="Windows\Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

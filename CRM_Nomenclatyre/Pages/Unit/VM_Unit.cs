@@ -16,7 +16,7 @@ namespace CRM_Nomenclatyre.Pages
     public class VM_Unit : INotifyPropertyChanged
     {
         //Свойства
-        public Settings Setting {  get; set; }
+        public mSettings _setting {  get; set; }
 
         private DataSet _listDataSet;
         public DataSet ListDataSet
@@ -69,9 +69,9 @@ namespace CRM_Nomenclatyre.Pages
         //Команда
 
         //Конструктор
-        public VM_Unit(Settings Setting)
+        public VM_Unit(mSettings Setting)
         {
-            this.Setting = Setting;
+            this._setting = Setting;
             //TableValue = SqlService.GetDataSet<UnitArt>();
         }
         //Методы

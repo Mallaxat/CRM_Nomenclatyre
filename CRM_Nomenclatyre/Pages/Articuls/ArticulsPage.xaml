@@ -28,7 +28,7 @@
         <DataGrid x:Name="dg_artList" 
                   Grid.Column="1" Grid.Row="1"
                   CanUserAddRows="True" CanUserDeleteRows="True" 
-                  ItemsSource="{Binding ListDataTable}"
+                  ItemsSource="{Binding ListArticles}"
                   SelectedItem="{Binding SeletArticul}"
                   AutoGenerateColumns="False">
                 

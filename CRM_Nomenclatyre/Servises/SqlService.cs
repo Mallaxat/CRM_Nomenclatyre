@@ -39,7 +39,7 @@ namespace CRM_Nomenclatyre.Servises
             {
                 using (var db = new Context())
                 {
-                    return db.DbUsers.Include(m=>m.Manager).FirstOrDefault(u=>u.Id==user.Id);
+                    return db.DbUsers.Include(m=>m.Manager).FirstOrDefault(u=>u.Login==user.Login);
                 }
             }
 
@@ -61,6 +61,87 @@ namespace CRM_Nomenclatyre.Servises
             }
 
         }
+        public static class ArticulSQL
+        {
+            public static List<Articles> GetTabArticuls(int id)
+            {
+                using (var db = new Context())
+                {
+                    
+                   return db.DbArticles.Include(u => u.Unit).Where(m=>m.ManagerId==id).ToList();
+
+                }
+            }
+
+            public static void Article(Articles article,int idManager)
+            {
+                Articles result = new Articles
+                {
+                    Named = article.Named,
+                    Sort=article.Sort,
+                    TypeTovar=article.TypeTovar,
+                    ManagerId= idManager,
+                    Unit= new UnitArt
+                    {
+                        Logistics = 0,
+                        CostPrice = 0,
+                        Price = 0,
+                    },
+                    Size=article.Size,
+                    Barcod=article.Barcod,
+                    Count=article.Count,
+                    Articul=article.Articul
+                };
+   
+                using (var db =new Context())
+                {
+                    db.DbArticles.Add(article);
+                    db.SaveChanges();
+                }
+            }
+
+            public static void UpdateListArticles(List<Articles> list,int ID)
+            {
+                using (var db = new Context())
+                {
+                    var listArt = db.DbArticles.Include(x => x.Unit).Where(x => x.ManagerId == ID).ToList();
+
+                    if (list.Count() <= listArt.Count()) return;
+                    foreach (var article in list)
+                    {
+                        if (!listArt.Contains(article))
+                        {
+                            Articles result = new Articles
+                            {
+                                Named = article.Named,
+                                Sort = article.Sort,
+                                TypeTovar = article.TypeTovar,
+                                ManagerId = ID,
+                                Unit = new UnitArt
+                                {
+                                    Logistics = 0,
+                                    CostPrice = 0,
+                                    Price = 0,
+                                },
+                                Size = article.Size,
+                                Barcod = article.Barcod,
+                                Count = article.Count,
+                                Articul = article.Articul
+                            };
+
+                            db.DbArticles.Add(result);
+                            db.SaveChanges();  
+                        }
+                    }
+
+                }
+      
+            }
+
+
+
+        }
+
 
 
 

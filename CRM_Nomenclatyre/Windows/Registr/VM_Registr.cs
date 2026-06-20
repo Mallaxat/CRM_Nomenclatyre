@@ -16,7 +16,7 @@ namespace CRM_Nomenclatyre.Windows.Registr
     {
 
         //Свойства
-        private Settings Setting { get; set; }
+        private mSettings _setting { get; set; }
 
         private string _login;
         public string Login
@@ -66,11 +66,10 @@ namespace CRM_Nomenclatyre.Windows.Registr
 
         public ICommand cRegistration {  get;}
 
-
         //Коснтруктор
-        public VM_Registr(Settings setting)
+        public VM_Registr(mSettings _setting)
         { 
-            this.Setting = setting;
+            this._setting = _setting;
 
             cRegistration = new RelayCommand(_ =>
             {
@@ -84,10 +83,10 @@ namespace CRM_Nomenclatyre.Windows.Registr
 
             if (Logging.IsRegist(userNow))
             {
-                Setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
+                _setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
 
             }
-            else Setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");
+            else _setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");
 
         }
 

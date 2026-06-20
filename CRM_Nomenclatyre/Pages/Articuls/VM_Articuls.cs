@@ -1,4 +1,5 @@
 ﻿using CRM_Nomenclatyre.Models;
+using CRM_Nomenclatyre.Properties;
 using CRM_Nomenclatyre.Servises;
 using CRM_Nomenclatyre.Windows;
 using System;
@@ -30,7 +31,7 @@ namespace CRM_Nomenclatyre.Pages
     {
         //Свойства 
         private const string TABLENAME = "tab_Article";
-        private Settings Setting { get; set; }
+        private mSettings _setting { get; set; }
 
         private DataSet _listDataSet;
         public DataSet ListDataSet
@@ -56,6 +57,20 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
+        private List<Articles> _listarticles;
+
+        public List<Articles> ListArticles
+        {
+            get => _listarticles;
+            set
+            {
+                if (value == null) return;
+                _listarticles = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private Articles _seletArticul;
         public Articles SeletArticul
         {
@@ -80,44 +95,43 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
-
         //Команды
         public ICommand cUpdate { get; }
         public ICommand cNext { get; }
         
+
+
         //Коснтруктор
-        public VM_Articuls(Settings Setting)
+        public VM_Articuls(mSettings _setting)
         {
-            this.Setting = Setting;
-            //ListDataSet = SqlService.LoadSetBD(TABLENAME, Setting.user.Id);
-            //ListDataTable = ListDataSet.Tables[0];
-           // TypeList = SqlService.SQL_TypeTovar.GetTab_Of();
-
-            //Вносим дефолтное значение для менеджера
-
+            this._setting = _setting;
+            ListArticles = SqlService.ArticulSQL.GetTabArticuls(_setting.user.Id);
             SetNums();
+
             cUpdate = new RelayCommand(_ =>
             {
-                //UpdateDataSet();
+                UpdateDataSet();
             });
 
             cNext = new RelayCommand(_ =>
             {            
-                VM_Main main = VM_Main.Initialize(Setting);
-                main.UpdatePage(Setting.serviseWindow.PageOpen<VM_Unit, UnitPage>(Setting));
-              
+                VM_Main main = VM_Main.Initialize(_setting);
+                main.UpdatePage(_setting.serviseWindow.PageOpen<VM_Unit, UnitPage>(_setting));
             });
         }
         //Методы
-/*        private void UpdateDataSet()
+       private void UpdateDataSet()
         {
-           if (ChechNull()) SqlService.UpdateTableBD(ListDataSet, TABLENAME, Setting.user.Id);
-            else
-            {
-                Setting.serviseMessege.Show("Заполнены не все столбцы","Ошибка ввода");
-                return;
-            }
-        }*/
+            /*         if (ChechNull()) SqlService.UpdateTableBD(ListDataSet, TABLENAME, Setting.user.Id);
+                      else
+                      {
+                          Setting.serviseMessege.Show("Заполнены не все столбцы","Ошибка ввода");
+                          return;
+                      }*/
+
+            SqlService.ArticulSQL.UpdateListArticles(ListArticles, _setting.user.Id);
+
+        }
          
         private bool ChechNull()
         {
@@ -130,20 +144,19 @@ namespace CRM_Nomenclatyre.Pages
         {
             if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Barcod.ToString()))
             {
-                ListDataTable.Columns[TabNameArticle.Barcod.ToString()].DefaultValue = Settings.Rand(12);
+                ListDataTable.Columns[TabNameArticle.Barcod.ToString()].DefaultValue = mSettings.Rand(12);
             }
 
             if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Articul.ToString()))
             {
-                ListDataTable.Columns[TabNameArticle.Articul.ToString()].DefaultValue = Settings.Rand(5, false);
+                ListDataTable.Columns[TabNameArticle.Articul.ToString()].DefaultValue = mSettings.Rand(5, false);
             }
 
             if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.ManagerId.ToString()))
             {
-                ListDataTable.Columns[TabNameArticle.ManagerId.ToString()].DefaultValue = Setting.user.Id;
+                ListDataTable.Columns[TabNameArticle.ManagerId.ToString()].DefaultValue = _setting.user.Id;
             }
         }
-
 
         //Интерфейс
         public event PropertyChangedEventHandler PropertyChanged;

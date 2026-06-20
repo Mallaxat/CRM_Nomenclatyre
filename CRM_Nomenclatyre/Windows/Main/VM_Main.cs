@@ -18,7 +18,7 @@ namespace CRM_Nomenclatyre.Windows
 
         //Свойства
         private static VM_Main Instanse {  get; set; }
-        private Settings Setting { get; set; }
+        private mSettings _setting { get; set; }
         private  Page сurrentPage;
         public Page CurrentPage
         {
@@ -35,14 +35,14 @@ namespace CRM_Nomenclatyre.Windows
         //Команды
 
         //Коснтруктор
-        private VM_Main(Settings Setting) 
+        private VM_Main(mSettings _setting) 
         { 
-            this.Setting = Setting;
-            CurrentPage = Setting.serviseWindow.PageOpen<VM_Articuls, ArticulsPage>(Setting);
+            this._setting = _setting;
+            CurrentPage = _setting.serviseWindow.PageOpen<VM_Articuls, ArticulsPage>(_setting);
         }
 
         //Методы
-        public static VM_Main Initialize(Settings Setting)
+        public static VM_Main Initialize(mSettings Setting)
         {
             if (Instanse == null) Instanse = new VM_Main(Setting);
             return Instanse;

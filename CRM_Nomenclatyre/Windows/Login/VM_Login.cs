@@ -18,7 +18,7 @@ namespace CRM_Nomenclatyre.Windows
     {
 
         //Свойства 
-        private Settings Setting{ get; set; }
+        private mSettings _setting { get; set; }
         private string _login;
         public string Login
         {
@@ -47,12 +47,12 @@ namespace CRM_Nomenclatyre.Windows
         public ICommand cLogin { get; }
 
         //Коснтруктор
-        public VM_Login(Settings setting)
+        public VM_Login(mSettings setting)
         {
-            this.Setting = setting;
+            this._setting = setting;
             cRegistration = new RelayCommand(_=>
              {
-                 Setting.serviseWindow.WindowOpen<RegistrWindow>(new VM_Registr(Setting));
+             _setting.serviseWindow.WindowOpen<RegistrWindow>(new VM_Registr(_setting));
             }) ;
             cLogin = new RelayCommand(_ =>
             {
@@ -75,13 +75,15 @@ namespace CRM_Nomenclatyre.Windows
                 Password = _password
             };
 
+            userNow=SqlService.UserSQL.GetFullUser(userNow);
             if (Logging.IsLogin(userNow))
             {
-                Setting.serviseMessege.Show("Вход успешный", "Вход");
-                VM_Main main = VM_Main.Initialize(Setting);
-                Setting.serviseWindow.WindowOpenAndClose<MainWindow>(main);
+                _setting.user= userNow;
+                _setting.serviseMessege.Show("Вход успешный", "Вход");
+                VM_Main main = VM_Main.Initialize(_setting);
+                _setting.serviseWindow.WindowOpenAndClose<MainWindow>(main);
             } 
-            else Setting.serviseMessege.Show("Не верный логин или пароль", "Вход");
+            else _setting.serviseMessege.Show("Не верный логин или пароль", "Вход");
         }
 
 

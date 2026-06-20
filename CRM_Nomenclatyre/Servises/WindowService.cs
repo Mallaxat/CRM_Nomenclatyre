@@ -67,7 +67,7 @@ namespace CRM_Nomenclatyre.Servises
             currentWindow.Close();
         }
 
-        public Page PageOpen<VM, P>(Settings setting) where P : Page
+        public Page PageOpen<VM, P>(mSettings setting) where P : Page
         {
             //Создаст нужную мне VMку и её сразу как контекст даст в пейдж
             var VM_Page = (VM)Activator.CreateInstance(typeof(VM), setting);

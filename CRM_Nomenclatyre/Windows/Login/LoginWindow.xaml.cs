@@ -24,12 +24,12 @@ namespace CRM_Nomenclatyre.Windows
     public partial class LoginWindow : Window
     {
         VM_Login _vm;
-        Settings _setting;
+        mSettings _setting;
 
         public LoginWindow()
         {
             InitializeComponent();
-            _setting = Settings.Initialize(new MessageeServise(this), new WindowService(), new Users());
+            _setting = mSettings.Initialize(new MessageeServise(this), new WindowService(), new Users());
             _vm = new VM_Login(_setting);
             DataContext = _vm;
 
