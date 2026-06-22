@@ -29,7 +29,7 @@ namespace CRM_Nomenclatyre.Models
         [ForeignKey("ManagerId")]
         public virtual Managers Manager { get; set; }
 
-        public virtual UnitArt Unit { get; set; } = new UnitArt();
+        public virtual UnitArt Unit { get; set; }
 
         //Свойства артикула
         public string? Size { get; set; } = "0";
@@ -37,7 +37,18 @@ namespace CRM_Nomenclatyre.Models
         public int Count { get; set; }
         public string Articul { get; set; } = mSettings.Rand(5,false);
 
-
+        public Articles ()
+        {
+/*            Unit  = new UnitArt
+            {
+                Article = this,
+                CostPrice = 0,
+                Price = 0,
+                Logistics = 0,
+                Comission = 0
+            };*/
+        }
+           
     }
 }
 

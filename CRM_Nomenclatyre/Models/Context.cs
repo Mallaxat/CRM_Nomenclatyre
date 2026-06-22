@@ -21,14 +21,7 @@ namespace CRM_Nomenclatyre.Models
 
         //Конструктор 
         public Context() : base("DB_MarketplaceMain") { }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Articles>()
-                .HasOptional(a => a.Unit)
-                .WithRequired(u => u.Article);
 
-            base.OnModelCreating(modelBuilder);
-        }
 
     }
 }

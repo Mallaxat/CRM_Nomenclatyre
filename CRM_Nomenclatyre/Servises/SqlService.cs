@@ -71,16 +71,47 @@ namespace CRM_Nomenclatyre.Servises
         
             public static void UpDateBD(string tableName,DataSet dataSet)
             {
-                using(SqlConnection con=new SqlConnection(connect))
+                try
                 {
-                    con.Open();
-                    adapter = new SqlDataAdapter($"Select * from {tableName}",connect);
-                    var bulder=new SqlCommandBuilder(adapter);
+                    using (SqlConnection con = new SqlConnection(connect))
+                    {
+                        con.Open();
+                        adapter = new SqlDataAdapter($"Select * from {tableName}", connect);
+                        var bulder = new SqlCommandBuilder(adapter);
 
-                    adapter.Update(dataSet, tableName);
+                        adapter.Update(dataSet, tableName);
+                        dataSet.Tables[tableName].Clear();
+                        adapter.Fill(dataSet, tableName);
+                    }
+                }
+                catch
+                {
+                    throw;
                 }
             }
         
+
+            public static void FindUnitArts(int id)
+            {
+                using(var db =new Context())
+                {
+                    // если не нашел такой юнит
+                    if(!db.DbUnitArts.Any(x => x.Id == id))
+                    {
+                        int i = 0;
+                        db.DbUnitArts.Add(new UnitArt
+                        {
+                            Id = id,
+                            CostPrice = 0,
+                            Price = 0,
+                            Logistics = 0,
+                        });
+                        db.SaveChanges();
+                   
+                    }
+                }
+            }
+
         }
 
         public static class UserSQL

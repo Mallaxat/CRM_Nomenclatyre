@@ -24,6 +24,14 @@ namespace CRM_Nomenclatyre.Models
         public decimal Logistics { get; set; }
         public decimal Comission { get; set; }
 
+        public decimal Profit {
+            get => field; 
+            set
+            {
+                field = Price - CostPrice - Logistics - (Price * Comission);
+            }
+        }
+        
         public virtual Articles Article { get; set; }
     }
 }

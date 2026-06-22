@@ -31,6 +31,7 @@ namespace CRM_Nomenclatyre.Pages
     {
         //Свойства 
         private const string TABLENAME = "Articles";
+        private const string TABLENAME2 = "UnitArt";
         private mSettings _setting { get; set; }
 
         private List<Articles> _listarticles;
@@ -104,9 +105,11 @@ namespace CRM_Nomenclatyre.Pages
         public VM_Articuls(mSettings _setting)
         {
             this._setting = _setting;
-
+            
             ListDataSet = SqlService.TableSQL.LoadSetBD(TABLENAME, _setting.user.Id);
             ListDataTable = ListDataSet.Tables[0];
+
+            ListArticles = SqlService.ArticulSQL.GetArticuls(_setting.user.Id);
 
             TypeList = SqlService.DirectorySQL.GetTypeTovar();
             SetNums();
@@ -123,10 +126,18 @@ namespace CRM_Nomenclatyre.Pages
             });
         }
         //Методы
-       private void UpdateDataSet()
+        private void UpdateDataSet()
         {
-
             SqlService.TableSQL.UpDateBD(TABLENAME, ListDataSet);
+
+            foreach (DataRow row in ListDataTable.Rows)
+            {
+                if (row.RowState == DataRowState.Deleted || row.IsNull("Id"))
+                    continue;
+                int test = row.Field<int>("Id");
+                SqlService.TableSQL.FindUnitArts(row.Field<int>("Id"));
+            }
+
 
         }
 

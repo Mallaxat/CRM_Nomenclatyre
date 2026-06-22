@@ -118,6 +118,10 @@
     <Compile Include="Migrations\202606222019004_TypeId.Designer.cs">
       <DependentUpon>202606222019004_TypeId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202606222141448_ProfitUnitArt.cs" />
+    <Compile Include="Migrations\202606222141448_ProfitUnitArt.Designer.cs">
+      <DependentUpon>202606222141448_ProfitUnitArt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\TypeCommission.cs" />
     <Compile Include="Models\TypeTovar.cs" />
@@ -225,6 +229,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202606222019004_TypeId.resx">
       <DependentUpon>202606222019004_TypeId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606222141448_ProfitUnitArt.resx">
+      <DependentUpon>202606222141448_ProfitUnitArt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
