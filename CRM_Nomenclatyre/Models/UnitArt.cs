@@ -15,14 +15,15 @@ namespace CRM_Nomenclatyre.Models
     public class UnitArt
     {
         [Key]
+        [ForeignKey(nameof(Article))]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         public decimal CostPrice { get; set; }
-
         public decimal Price { get; set; }
-
         public decimal Logistics { get; set; }
-
         public decimal Comission { get; set; }
+
+        public virtual Articles Article { get; set; }
     }
 }

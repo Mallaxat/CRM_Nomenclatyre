@@ -100,7 +100,7 @@ namespace CRM_Nomenclatyre.Pages
        private void UpdateDataSet()
         {
 
-            SqlService.UpdateArticles(ListArticles);
+            SqlService.UpdateArticles(ListArticles,_setting.user.Id);
 
         }
 

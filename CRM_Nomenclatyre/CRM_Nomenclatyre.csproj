@@ -102,6 +102,18 @@
     <Compile Include="Migrations\202606192056527_DbUpdate_19.06.Designer.cs">
       <DependentUpon>202606192056527_DbUpdate_19.06.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202606201054546_keys2.cs" />
+    <Compile Include="Migrations\202606201054546_keys2.Designer.cs">
+      <DependentUpon>202606201054546_keys2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202606201055127_keys21.cs" />
+    <Compile Include="Migrations\202606201055127_keys21.Designer.cs">
+      <DependentUpon>202606201055127_keys21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202606201101563_гтше.cs" />
+    <Compile Include="Migrations\202606201101563_гтше.Designer.cs">
+      <DependentUpon>202606201101563_гтше.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\TypeCommission.cs" />
     <Compile Include="Models\TypeTovar.cs" />
@@ -197,6 +209,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202606192056527_DbUpdate_19.06.resx">
       <DependentUpon>202606192056527_DbUpdate_19.06.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606201054546_keys2.resx">
+      <DependentUpon>202606201054546_keys2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606201055127_keys21.resx">
+      <DependentUpon>202606201055127_keys21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606201101563_гтше.resx">
+      <DependentUpon>202606201101563_гтше.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

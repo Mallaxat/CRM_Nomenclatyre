@@ -24,23 +24,18 @@ namespace CRM_Nomenclatyre.Servises
         private const string CONNECT = "DB_MarketplaceMain";
         private static string connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
 
-        public static void UpdateArticles(List<Articles> listArticles)
+        //Проблемный метод ошибка обновлений
+        public static void UpdateArticles(List<Articles> listArticles,int ID)
         {
             using (var db=new Context())
             {
-                var bufList=db.DbArticles.ToList();
+                var bufList = db.DbArticles.Where(x => x.ManagerId == ID).ToList();
                 foreach (var item in listArticles)
                 {
                     if (bufList.Contains(item)) continue;
                     else
                     {
-                        item.Unit = new UnitArt
-                        {
-                            CostPrice = 0,
-                            Price=0,
-                            Logistics=0
-                        };
-
+                        item.ManagerId = ID;
                         db.DbArticles.Add(item);
                     }
                 }
