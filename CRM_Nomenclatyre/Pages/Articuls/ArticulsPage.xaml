@@ -37,7 +37,7 @@
                 <DataGridTextColumn Header="Артикул" Binding="{Binding Named , UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Номенклатура" Binding="{Binding Articul, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 
-                <DataGridComboBoxColumn Header="Tovar"
+                <DataGridComboBoxColumn Header="Товар"
                                         ItemsSource="{Binding Source={StaticResource TypeListSource}}"
                                         DisplayMemberPath="Name"
                                         SelectedValuePath="Id"
