@@ -28,7 +28,7 @@
         <DataGrid x:Name="dg_artList" 
                   Grid.Column="1" Grid.Row="1"
                   CanUserAddRows="True" CanUserDeleteRows="True" 
-                  ItemsSource="{Binding ListArticles}"
+                  ItemsSource="{Binding ListDataTable}"
                   SelectedItem="{Binding SeletArticul}"
                   AutoGenerateColumns="False">
                 
@@ -41,7 +41,7 @@
                                         ItemsSource="{Binding Source={StaticResource TypeListSource}}"
                                         DisplayMemberPath="Name"
                                         SelectedValuePath="Id"
-                                        SelectedValueBinding="{Binding [Sort], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        SelectedValueBinding="{Binding [TypeTovarID], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <DataGridTextColumn Header="Размер" Binding="{Binding Size, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Количество" Binding="{Binding Count, UpdateSourceTrigger=PropertyChanged}"/>

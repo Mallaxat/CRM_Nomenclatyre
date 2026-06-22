@@ -30,19 +30,58 @@ namespace CRM_Nomenclatyre.Servises
             using (var db=new Context())
             {
                 var bufList = db.DbArticles.Where(x => x.ManagerId == ID).ToList();
+
                 foreach (var item in listArticles)
                 {
-                    if (bufList.Contains(item)) continue;
-                    else
-                    {
-                        item.ManagerId = ID;
-                        db.DbArticles.Add(item);
-                    }
+                    item.ManagerId = ID;
+                    db.DbArticles.Add(item);
                 }
                 db.SaveChanges();
             }
         }
 
+
+        public static class TableSQL
+        {
+
+            public static DataSet LoadSetBD(string tableName, int id)
+            {
+                try
+                {
+                    using (conn = new SqlConnection(connect))
+                    {
+                        adapter = new SqlDataAdapter($"Select * from {tableName} where ManagerId={id}", conn);
+                        SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
+
+                        dataSet = new DataSet();
+                        adapter.Fill(dataSet, tableName);
+                        return dataSet;
+                    }              
+                }
+               catch
+                {
+                    return null;
+                }
+                finally
+                {
+                    if (conn != null || conn.State == ConnectionState.Open) conn.Close();
+
+                }
+            }
+        
+            public static void UpDateBD(string tableName,DataSet dataSet)
+            {
+                using(SqlConnection con=new SqlConnection(connect))
+                {
+                    con.Open();
+                    adapter = new SqlDataAdapter($"Select * from {tableName}",connect);
+                    var bulder=new SqlCommandBuilder(adapter);
+
+                    adapter.Update(dataSet, tableName);
+                }
+            }
+        
+        }
 
         public static class UserSQL
         {
@@ -111,10 +150,23 @@ namespace CRM_Nomenclatyre.Servises
             }
 
 
-  
+
 
         }
 
+        public static class DirectorySQL
+        {
+            public static List<TypeTovar> GetTypeTovar()
+            {
+                List<TypeTovar> result;
+                using ( var db = new Context())
+                {
+                    result = db.DbTypeTovars.ToList();
+                    return result;
+                }
+            }
+
+        }
 
 
 

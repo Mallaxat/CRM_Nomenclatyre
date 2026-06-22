@@ -30,7 +30,7 @@ namespace CRM_Nomenclatyre.Pages
     public class VM_Articuls:INotifyPropertyChanged
     {
         //Свойства 
-        private const string TABLENAME = "tab_Article";
+        private const string TABLENAME = "Articles";
         private mSettings _setting { get; set; }
 
         private List<Articles> _listarticles;
@@ -45,7 +45,6 @@ namespace CRM_Nomenclatyre.Pages
                 OnPropertyChanged();
             }
         }
-
 
         private Articles _seletArticul;
         public Articles SeletArticul
@@ -70,6 +69,30 @@ namespace CRM_Nomenclatyre.Pages
                 OnPropertyChanged();
             }
         }
+        
+        private DataSet _listDataSet;
+        public DataSet ListDataSet
+        {
+            get => _listDataSet;
+            set
+            {
+                if (value == null) return;
+                _listDataSet = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DataTable _listDataTabe;
+        public DataTable ListDataTable
+        {
+            get => _listDataTabe;
+            set
+            {
+                if (value == null) return;
+                _listDataTabe = value;
+                OnPropertyChanged();
+            }
+        }
 
         //Команды
         public ICommand cUpdate { get; }
@@ -81,12 +104,15 @@ namespace CRM_Nomenclatyre.Pages
         public VM_Articuls(mSettings _setting)
         {
             this._setting = _setting;
-            ListArticles = SqlService.ArticulSQL.GetArticuls(_setting.user.Id);
-            //SetNums();
+
+            ListDataSet = SqlService.TableSQL.LoadSetBD(TABLENAME, _setting.user.Id);
+            ListDataTable = ListDataSet.Tables[0];
+
+            TypeList = SqlService.DirectorySQL.GetTypeTovar();
+            SetNums();
 
             cUpdate = new RelayCommand(_ =>
             {
-
                 UpdateDataSet();
             });
 
@@ -100,9 +126,30 @@ namespace CRM_Nomenclatyre.Pages
        private void UpdateDataSet()
         {
 
-            SqlService.UpdateArticles(ListArticles,_setting.user.Id);
+            SqlService.TableSQL.UpDateBD(TABLENAME, ListDataSet);
 
         }
+
+
+        private void SetNums()
+        {
+            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Barcod.ToString()))
+            {
+                ListDataTable.Columns[TabNameArticle.Barcod.ToString()].DefaultValue = mSettings.Rand(12);
+            }
+
+            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Articul.ToString()))
+            {
+                ListDataTable.Columns[TabNameArticle.Articul.ToString()].DefaultValue = mSettings.Rand(5, false);
+            }
+
+            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.ManagerId.ToString()))
+            {
+                ListDataTable.Columns[TabNameArticle.ManagerId.ToString()].DefaultValue = _setting.user.Id;
+            }
+
+        }
+
 
         //Интерфейс
         public event PropertyChangedEventHandler PropertyChanged;
