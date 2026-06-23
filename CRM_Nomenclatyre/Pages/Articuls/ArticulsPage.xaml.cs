@@ -43,5 +43,20 @@ namespace CRM_Nomenclatyre.Pages
         {
             Commit();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            bt_update.IsEnabled=false;
+            dg_artList.CanUserAddRows = false;
+            dg_artList.CanUserDeleteRows = false;
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            bt_update.IsEnabled = true;
+            dg_artList.CanUserAddRows = true;
+            dg_artList.CanUserDeleteRows = true; 
+        }
     }
 }

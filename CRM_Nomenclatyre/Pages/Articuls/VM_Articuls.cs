@@ -27,7 +27,7 @@ namespace CRM_Nomenclatyre.Pages
         Sort
     }
 
-    public class VM_Articuls:INotifyPropertyChanged
+    public class VM_Articuls : INotifyPropertyChanged
     {
         //Свойства 
         private const string TABLENAME = "Articles";
@@ -47,18 +47,6 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
-        private Articles _seletArticul;
-        public Articles SeletArticul
-        {
-            get => _seletArticul;
-            set
-            {
-                if (value == null) return;
-                _seletArticul = value;
-                OnPropertyChanged();
-            }
-        }
-
         private List<TypeTovar> _typeList;
         public List<TypeTovar> TypeList
         {
@@ -70,7 +58,7 @@ namespace CRM_Nomenclatyre.Pages
                 OnPropertyChanged();
             }
         }
-        
+
         private DataSet _listDataSet;
         public DataSet ListDataSet
         {
@@ -95,12 +83,25 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
+        private int _filterIndex;
+        public int FilterIndex
+        {
+            get => _filterIndex;
+            set
+            {
+                if (value < 0) return;
+                _filterIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
         //Команды
         public ICommand cUpdate { get; }
         public ICommand cNext { get; }
+
+        public ICommand cFilterAdd {  get; }
+        public ICommand cFilterDelete { get; }
         
-
-
         //Коснтруктор
         public VM_Articuls(mSettings _setting)
         {
@@ -122,34 +123,42 @@ namespace CRM_Nomenclatyre.Pages
             });
 
             cNext = new RelayCommand(_ =>
-            {            
+            {
                 VM_Main main = VM_Main.Initialize(_setting);
                 main.UpdatePage(_setting.serviseWindow.PageOpen<VM_Unit, UnitPage>(_setting));
             });
+
+            cFilterAdd = new RelayCommand(_ =>
+            {
+                FilterStart();
+            });
+            cFilterDelete = new RelayCommand(_ =>
+            {
+                FilterStop();
+            });
+
         }
+        
+        
         //Методы
         private void UpdateDataSet()
         {
             SqlService.TableSQL.UpDateBD(TABLENAME, ListDataSet);
             DataTable tabUnit = ListDataSet.Tables["UnitArts"];
-
-            foreach(DataRow row in ListDataTable.Rows)
+            int id = -1;
+            bool UnitIdexist = true;
+            foreach (DataRow row in ListDataTable.Rows)
             {
-                int id = row.Field<int>("Id");
+                id = row.Field<int>("Id");
                 //Переводим к Linq и если не пустой и если айдишник равен вернет тру
-                bool UnitIdexist = tabUnit.AsEnumerable().Any(x => !x.IsNull("Id") && x.Field<int>("Id") == id);
+                UnitIdexist = tabUnit.AsEnumerable().Any(x => !x.IsNull("Id") && x.Field<int>("Id") == id);
 
-                if(!UnitIdexist)
+                if (!UnitIdexist)
                 {
                     SqlService.TableSQL.FindUnitArts(id);
                 }
             }
-
-
-          
-
-            }
-
+        }
 
         private void SetNums()
         {
@@ -170,7 +179,30 @@ namespace CRM_Nomenclatyre.Pages
 
         }
 
+        private void FilterStart()
+        {
+            if(FilterIndex <0 )
+            {
+                _setting.serviseMessege.Show("Не выбран фильтр","Ошибка фильтрации");
+                return;
+            }
+            DataTable FilterTable = new DataTable();
 
+            //создаем строку
+            var row = ListDataTable.AsEnumerable().Where(x => x.Field<int>("TypeTovarID") == FilterIndex);
+            //копируем эти значения коллекций в новую таблицу
+            //Если в строках есть значения, то мы их копируем, если нет то копернем старую таблицу
+            FilterTable= row.Any()?row.CopyToDataTable():ListDataTable.Clone();
+            ListDataTable = FilterTable;
+        }
+       
+        private void FilterStop()
+        {
+            ListDataTable = ListDataSet.Tables[0];
+
+        }
+       
+        
         //Интерфейс
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName] string propertyname = null)

@@ -29,9 +29,8 @@
                   Grid.Column="1" Grid.Row="1"
                   CanUserAddRows="True" CanUserDeleteRows="True" 
                   ItemsSource="{Binding ListDataTable}"
-                  SelectedItem="{Binding SeletArticul}"
                   AutoGenerateColumns="False">
-                
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Код" Binding="{Binding ManagerId, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Visibility="Collapsed"/>
                 <DataGridTextColumn Header="Артикул" Binding="{Binding Named , UpdateSourceTrigger=PropertyChanged}"/>
@@ -48,9 +47,28 @@
                 <DataGridTextColumn Header="Баркод" Binding="{Binding Barcod, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Обновить" Command="{Binding cUpdate}"
+        <Button x:Name="bt_update" Content="Обновить" Command="{Binding cUpdate}"
                 Grid.Column="1"  
                 HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Click" />
         <Button Grid.Column="1" Content="Next" HorizontalAlignment="Left" Margin="407,10,0,0" VerticalAlignment="Top" Command="{Binding  cNext}"/>
+
+
+        <ComboBox Width="120" Grid.Column="1" Grid.Row="0" 
+                  HorizontalAlignment="Right" VerticalContentAlignment="Bottom" Margin="0,70,0,0"
+                  ItemsSource="{Binding Source={StaticResource TypeListSource}}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding FilterIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  />
+        <Button Grid.Column="1" Content="Фильтровать" 
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="334,45,0,0" Width="74" Height="25" 
+                Command="{Binding cFilterAdd}" Click="Button_Click_1"/>
+
+        <Button Grid.Column="1" 
+                Content="Снять фильтрацию" 
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="420,45,0,0" Width="60" Height="25"
+                Command="{Binding cFilterDelete}" Click="Button_Click_2"/>
     </Grid>
 </Page>
