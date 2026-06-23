@@ -68,7 +68,35 @@ namespace CRM_Nomenclatyre.Servises
 
                 }
             }
-        
+            public static DataSet LoadSetBD(List<string> tableNames)
+            {
+/*                try
+                {*/
+                    using (conn = new SqlConnection(connect))
+                    {
+
+                    dataSet = new DataSet();
+                    foreach (var table in tableNames)
+                        {
+                            adapter = new SqlDataAdapter($"Select * from {table}", conn);
+                            SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
+
+                            adapter.Fill(dataSet, table);
+                        }
+
+                        return dataSet;
+                    }
+/*                }
+                catch
+                {
+                    return null;
+                }
+                finally
+                {
+                    if (conn != null || conn.State == ConnectionState.Open) conn.Close();
+
+                }*/
+            }
             public static void UpDateBD(string tableName,DataSet dataSet)
             {
                 try
@@ -89,8 +117,7 @@ namespace CRM_Nomenclatyre.Servises
                     throw;
                 }
             }
-        
-
+            
             public static void FindUnitArts(int id)
             {
                 using(var db =new Context())
@@ -98,7 +125,6 @@ namespace CRM_Nomenclatyre.Servises
                     // если не нашел такой юнит
                     if(!db.DbUnitArts.Any(x => x.Id == id))
                     {
-                        int i = 0;
                         db.DbUnitArts.Add(new UnitArt
                         {
                             Id = id,

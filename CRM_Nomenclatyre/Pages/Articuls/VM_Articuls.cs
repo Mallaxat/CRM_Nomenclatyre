@@ -31,7 +31,7 @@ namespace CRM_Nomenclatyre.Pages
     {
         //Свойства 
         private const string TABLENAME = "Articles";
-        private const string TABLENAME2 = "UnitArt";
+        private const string TABLENAME2 = "UnitArts";
         private mSettings _setting { get; set; }
 
         private List<Articles> _listarticles;
@@ -105,8 +105,10 @@ namespace CRM_Nomenclatyre.Pages
         public VM_Articuls(mSettings _setting)
         {
             this._setting = _setting;
-            
-            ListDataSet = SqlService.TableSQL.LoadSetBD(TABLENAME, _setting.user.Id);
+
+            //ListDataSet = SqlService.TableSQL.LoadSetBD(TABLENAME, _setting.user.Id);
+            List<string> list = new List<string> { TABLENAME, TABLENAME2 };
+            ListDataSet = SqlService.TableSQL.LoadSetBD(list);
             ListDataTable = ListDataSet.Tables[0];
 
             ListArticles = SqlService.ArticulSQL.GetArticuls(_setting.user.Id);
@@ -129,17 +131,24 @@ namespace CRM_Nomenclatyre.Pages
         private void UpdateDataSet()
         {
             SqlService.TableSQL.UpDateBD(TABLENAME, ListDataSet);
+            DataTable tabUnit = ListDataSet.Tables["UnitArts"];
 
-            foreach (DataRow row in ListDataTable.Rows)
+            foreach(DataRow row in ListDataTable.Rows)
             {
-                if (row.RowState == DataRowState.Deleted || row.IsNull("Id"))
-                    continue;
-                int test = row.Field<int>("Id");
-                SqlService.TableSQL.FindUnitArts(row.Field<int>("Id"));
+                int id = row.Field<int>("Id");
+                //Переводим к Linq и если не пустой и если айдишник равен вернет тру
+                bool UnitIdexist = tabUnit.AsEnumerable().Any(x => !x.IsNull("Id") && x.Field<int>("Id") == id);
+
+                if(!UnitIdexist)
+                {
+                    SqlService.TableSQL.FindUnitArts(id);
+                }
             }
 
 
-        }
+          
+
+            }
 
 
         private void SetNums()
