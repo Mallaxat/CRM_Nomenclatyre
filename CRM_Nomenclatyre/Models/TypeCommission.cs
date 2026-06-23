@@ -14,13 +14,13 @@ namespace CRM_Nomenclatyre.Models
 
 
         [Required]
-        [Index("IX_TypeCommission_SortId", IsUnique = true)]
-        public int SortId { get; set; }
+        [Index("IX_TypeCommission_TovarId", IsUnique = true)]
+        public int TovarId { get; set; }
 
         [Required]
         public decimal NameValue { get; set; }
 
-        [ForeignKey("SortId")]
+        [ForeignKey("TovarId")]
         public virtual TypeTovar TypeTovar { get; set; }
 
     }

@@ -155,7 +155,7 @@ namespace CRM_Nomenclatyre.Pages
 
                 if (!UnitIdexist)
                 {
-                    SqlService.TableSQL.FindUnitArts(id);
+                    SqlService.TableSQL.AddUnitArts(id);
                 }
             }
         }

@@ -24,26 +24,8 @@ namespace CRM_Nomenclatyre.Servises
         private const string CONNECT = "DB_MarketplaceMain";
         private static string connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
 
-        //Проблемный метод ошибка обновлений
-        public static void UpdateArticles(List<Articles> listArticles,int ID)
-        {
-            using (var db=new Context())
-            {
-                var bufList = db.DbArticles.Where(x => x.ManagerId == ID).ToList();
-
-                foreach (var item in listArticles)
-                {
-                    item.ManagerId = ID;
-                    db.DbArticles.Add(item);
-                }
-                db.SaveChanges();
-            }
-        }
-
-
         public static class TableSQL
         {
-
             public static DataSet LoadSetBD(string tableName, int id)
             {
                 try
@@ -116,9 +98,8 @@ namespace CRM_Nomenclatyre.Servises
                 {
                     throw;
                 }
-            }
-            
-            public static void FindUnitArts(int id)
+            } 
+            public static void AddUnitArts(int id)
             {
                 using(var db =new Context())
                 {
@@ -134,6 +115,26 @@ namespace CRM_Nomenclatyre.Servises
                         });
                         db.SaveChanges();
                    
+                    }
+                }
+            }
+            public static void AddUnitArts(int id,int tovar)
+            {
+                using (var db = new Context())
+                {
+                    // если не нашел такой юнит
+                    if (!db.DbUnitArts.Any(x => x.Id == id))
+                    {
+
+                        db.DbUnitArts.Add(new UnitArt
+                        {
+                            Id = id,
+                            CostPrice = 0,
+                            Price = 0,
+                            Logistics = 0,
+                        });
+                        db.SaveChanges();
+
                     }
                 }
             }
@@ -158,7 +159,6 @@ namespace CRM_Nomenclatyre.Servises
                     return db.DbUsers.Include(m=>m.Manager).FirstOrDefault(u=>u.Login==user.Login);
                 }
             }
-
             public static bool FindUser(Users user)
             {
                 if(GetUser(user)==null) return false;
@@ -179,7 +179,7 @@ namespace CRM_Nomenclatyre.Servises
         }
         public static class ArticulSQL
         {
-           public static List<Articles> GetArticuls(int id)
+            public static List<Articles> GetArticuls(int id)
             {
                 using (var db = new Context())
                 {
@@ -188,7 +188,6 @@ namespace CRM_Nomenclatyre.Servises
 
                 }
             }
-
             public static bool FindBarcode(string bar)
             {
                 using(var db = new Context())
@@ -206,9 +205,6 @@ namespace CRM_Nomenclatyre.Servises
                 }
             }
 
-
-
-
         }
 
         public static class DirectorySQL
@@ -219,6 +215,15 @@ namespace CRM_Nomenclatyre.Servises
                 using ( var db = new Context())
                 {
                     result = db.DbTypeTovars.ToList();
+                    return result;
+                }
+            }
+            public static List<TypeCommission> GetTypeCommission()
+            {
+                List<TypeCommission> result;
+                using (var db = new Context())
+                {
+                    result = db.DbTypeCommissions.ToList();
                     return result;
                 }
             }

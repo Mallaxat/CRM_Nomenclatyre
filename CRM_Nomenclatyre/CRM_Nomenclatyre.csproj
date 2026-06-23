@@ -122,6 +122,10 @@
     <Compile Include="Migrations\202606222141448_ProfitUnitArt.Designer.cs">
       <DependentUpon>202606222141448_ProfitUnitArt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202606231038407_rename.cs" />
+    <Compile Include="Migrations\202606231038407_rename.Designer.cs">
+      <DependentUpon>202606231038407_rename.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\TypeCommission.cs" />
     <Compile Include="Models\TypeTovar.cs" />
@@ -232,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202606222141448_ProfitUnitArt.resx">
       <DependentUpon>202606222141448_ProfitUnitArt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606231038407_rename.resx">
+      <DependentUpon>202606231038407_rename.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
