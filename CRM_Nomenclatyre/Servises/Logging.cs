@@ -23,6 +23,7 @@ namespace CRM_Nomenclatyre.Servises
         //Метод, для проверки наличия и входа
         public static bool IsLogin(Users user)
         {
+            if(user==null) return false;
             if (SqlService.UserSQL.FindUser(user)) return true;
             return false;
         }

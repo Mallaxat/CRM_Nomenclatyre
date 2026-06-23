@@ -32,10 +32,10 @@ namespace CRM_Nomenclatyre.Pages
         //Свойства 
         private const string TABLENAME = "Articles";
         private const string TABLENAME2 = "UnitArts";
+        
         private mSettings _setting { get; set; }
 
         private List<Articles> _listarticles;
-
         public List<Articles> ListArticles
         {
             get => _listarticles;
