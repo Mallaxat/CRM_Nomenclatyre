@@ -114,14 +114,14 @@ namespace CRM_Nomenclatyre.Servises
                             Logistics = 0,
                         });
                         db.SaveChanges();
-                   
                     }
                 }
             }
-            public static void AddUnitArts(int id,int tovar)
+            public static void AddUnitArts(int id,decimal tovar)
             {
                 using (var db = new Context())
                 {
+                    TypeCommission result = db.DbTypeCommissions.FirstOrDefault(x => x.TovarId == tovar);
                     // если не нашел такой юнит
                     if (!db.DbUnitArts.Any(x => x.Id == id))
                     {
@@ -132,6 +132,7 @@ namespace CRM_Nomenclatyre.Servises
                             CostPrice = 0,
                             Price = 0,
                             Logistics = 0,
+                            Comission=result.NameValue,
                         });
                         db.SaveChanges();
 

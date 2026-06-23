@@ -146,16 +146,19 @@ namespace CRM_Nomenclatyre.Pages
             SqlService.TableSQL.UpDateBD(TABLENAME, ListDataSet);
             DataTable tabUnit = ListDataSet.Tables["UnitArts"];
             int id = -1;
+            decimal tovartype = -1;
             bool UnitIdexist = true;
             foreach (DataRow row in ListDataTable.Rows)
             {
                 id = row.Field<int>("Id");
+                tovartype = row.Field<int>("TypeTovarID");
+
                 //Переводим к Linq и если не пустой и если айдишник равен вернет тру
                 UnitIdexist = tabUnit.AsEnumerable().Any(x => !x.IsNull("Id") && x.Field<int>("Id") == id);
 
                 if (!UnitIdexist)
                 {
-                    SqlService.TableSQL.AddUnitArts(id);
+                    SqlService.TableSQL.AddUnitArts(id, tovartype);
                 }
             }
         }
