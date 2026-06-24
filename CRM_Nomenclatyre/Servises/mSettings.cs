@@ -1,10 +1,12 @@
-﻿using System;
+﻿using CRM_Nomenclatyre.Models;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using CRM_Nomenclatyre.Models;
+using System.Windows.Controls;
 
 namespace CRM_Nomenclatyre.Servises
 {
@@ -64,8 +66,18 @@ namespace CRM_Nomenclatyre.Servises
             }
         }
 
+        public class RequiredValidationRule : ValidationRule
+        {
+            public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+            {
+                return string.IsNullOrWhiteSpace(value?.ToString())
+                    ? new ValidationResult(false, "Артикул обязателен")
+                    : ValidationResult.ValidResult;
+            }
+        }
+    }
 
 
     }
 
-}
+

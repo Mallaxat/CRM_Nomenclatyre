@@ -10,6 +10,7 @@
     <Page.Resources>
         <CollectionViewSource x:Key="TypeListSource"
                           Source="{Binding TypeList}" />
+
     </Page.Resources>
 
     <Grid Unloaded="Grid_Unloaded">
@@ -34,6 +35,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Код" Binding="{Binding ManagerId, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Visibility="Collapsed"/>
                 <DataGridTextColumn Header="Артикул" Binding="{Binding Named , UpdateSourceTrigger=PropertyChanged}"/>
+   
+    
                 <DataGridTextColumn Header="Номенклатура" Binding="{Binding Articul, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 
                 <DataGridComboBoxColumn Header="Товар"

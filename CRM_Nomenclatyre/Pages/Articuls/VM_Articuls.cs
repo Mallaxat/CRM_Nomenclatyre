@@ -168,7 +168,6 @@ namespace CRM_Nomenclatyre.Pages
                 }
             }
         }
-
         private void SetNums(object sender, DataTableNewRowEventArgs e)
         {
             if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Barcod.ToString()))
@@ -205,7 +204,6 @@ namespace CRM_Nomenclatyre.Pages
             }
 
         }
-
         private void FilterStart()
         {
             ListDataTable=ListDataSet.Tables[0];
@@ -221,15 +219,13 @@ namespace CRM_Nomenclatyre.Pages
             //Если в строках есть значения, то мы их копируем, если нет то копернем старую таблицу
             FilterTable= row.Any()?row.CopyToDataTable():ListDataTable.Clone();
             ListDataTable = FilterTable;
-        }
-       
+        }  
         private void FilterStop()
         {
             ListDataTable = ListDataSet.Tables[0];
 
         }
        
-        
         //Интерфейс
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName] string propertyname = null)
