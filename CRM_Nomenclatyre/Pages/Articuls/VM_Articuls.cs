@@ -107,14 +107,7 @@ namespace CRM_Nomenclatyre.Pages
         {
             this._setting = _setting;
 
-            //ListDataSet = SqlService.TableSQL.LoadSetBD(TABLENAME, _setting.user.Id);
-            List<string> list = new List<string> { TABLENAME, TABLENAME2 };
-            ListDataSet = SqlService.TableSQL.LoadSetBD(list);
-            ListDataTable = ListDataSet.Tables[0];
-
-            ListArticles = SqlService.ArticulSQL.GetArticuls(_setting.user.Id);
-
-            TypeList = SqlService.DirectorySQL.GetTypeTovar();
+            TablSetting();
             SetNums();
             ListDataTable.TableNewRow -= SetNums;
             ListDataTable.TableNewRow += SetNums;
@@ -143,6 +136,17 @@ namespace CRM_Nomenclatyre.Pages
         
         
         //Методы
+        private void TablSetting()
+        {
+            List<string> list = new List<string> { TABLENAME, TABLENAME2 };
+            ListDataSet = SqlService.TableSQL.LoadSetBD(list);
+            DataTable buf = ListDataSet.Tables[0];
+            var rows = buf.AsEnumerable().Where(row => row.Field<int>("ManagerId") == _setting.user.Id);
+            ListDataTable = rows.Any()? rows.CopyToDataTable(): buf.Clone();
+
+            ListArticles = SqlService.ArticulSQL.GetArticuls(_setting.user.Id);
+            TypeList = SqlService.DirectorySQL.GetTypeTovar();
+        }
         private void UpdateDataSet()
         {
             SqlService.TableSQL.UpDateBD(TABLENAME, ListDataSet);

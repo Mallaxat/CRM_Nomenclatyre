@@ -57,7 +57,7 @@ namespace CRM_Nomenclatyre.Pages
             get => procCommand;
             set
             {
-                procCommand = new List<string> { "Лучшие товары", "Худшие товары", "Самая высокая цена", "Самая низкая цена","Высокие расходы","Низкие расходы" };
+                procCommand = new List<string> { " ","Лучшие товары", "Худшие товары", "Самая высокая цена", "Самая низкая цена","Высокие расходы","Низкие расходы","Минусовая прибыль","Прибыль" };
                 OnPropertyChanged();
             }
         }
@@ -169,32 +169,48 @@ namespace CRM_Nomenclatyre.Pages
             {
                 case 0:
                     {
-                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.BEST_ART, _setting.user.Id, SelectType);
+
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.GET_ARTICLES, _setting.user.Id, SelectType);
                         break;
                     }
                 case 1:
                     {
-                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.WORST_ART, _setting.user.Id, SelectType);
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.BEST_ART, _setting.user.Id, SelectType);
                         break;
                     }
                 case 2:
                     {
-                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.MAXPRICE, _setting.user.Id, SelectType);
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.WORST_ART, _setting.user.Id, SelectType);
                         break;
                     }
                 case 3:
                     {
-                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.MINPRICE, _setting.user.Id, SelectType);
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.MAXPRICE, _setting.user.Id, SelectType);
                         break;
                     }
                 case 4:
                     {
-                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.HIGH_EXPENSE_ART,_setting.user.Id, SelectType);
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.MINPRICE, _setting.user.Id, SelectType);
                         break;
                     }
                 case 5:
                     {
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.HIGH_EXPENSE_ART,_setting.user.Id, SelectType);
+                        break;
+                    }
+                case 6:
+                    {
                         TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.LOW_EXPENSE_ART, _setting.user.Id, SelectType);
+                        break;
+                    }
+                case 7:
+                    {
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.GET_LOSS_PROFIT, _setting.user.Id, SelectType);
+                        break;
+                    }
+                case 8:
+                    {
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.GET_PROFIT, _setting.user.Id, SelectType);
                         break;
                     }
             }

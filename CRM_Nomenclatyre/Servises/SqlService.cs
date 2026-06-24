@@ -18,7 +18,13 @@ namespace CRM_Nomenclatyre.Servises
 {
     public enum SQLprocedure
     {
-        BEST_ART, WORST_ART, MAXPRICE, MINPRICE, HIGH_EXPENSE_ART, LOW_EXPENSE_ART
+        BEST_ART, WORST_ART, 
+        MAXPRICE, MINPRICE, 
+        HIGH_EXPENSE_ART, LOW_EXPENSE_ART,
+        GET_ARTICLES, 
+        GET_LOSS_PROFIT, GET_PROFIT
+
+
     }
     public static class SqlService
     {
