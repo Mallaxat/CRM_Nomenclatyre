@@ -204,13 +204,13 @@ namespace CRM_Nomenclatyre.Pages
 
         private void FilterStart()
         {
-            if(FilterIndex <0 )
+            ListDataTable=ListDataSet.Tables[0];
+            if (FilterIndex <0 )
             {
                 _setting.serviseMessege.Show("Не выбран фильтр","Ошибка фильтрации");
                 return;
             }
             DataTable FilterTable = new DataTable();
-
             //создаем строку
             var row = ListDataTable.AsEnumerable().Where(x => x.Field<int>("TypeTovarID") == FilterIndex);
             //копируем эти значения коллекций в новую таблицу

@@ -209,6 +209,23 @@ namespace CRM_Nomenclatyre.Servises
 
         }
 
+        public static class UnitSQL
+        {
+            public static List<UnitArt> GetUnitArt(int id)
+            {
+                using (var db = new Context())
+                {
+
+                    return db.DbUnitArts.Include(u => u.Article).Where(m => m.Article.ManagerId == id).ToList();
+
+                }
+            }
+
+            
+
+        }
+
+
         public static class DirectorySQL
         {
             public static List<TypeTovar> GetTypeTovar()

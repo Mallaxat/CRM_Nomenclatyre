@@ -72,7 +72,7 @@ namespace CRM_Nomenclatyre.Pages
         public VM_Unit(mSettings Setting)
         {
             this._setting = Setting;
-            //TableValue = SqlService.GetDataSet<UnitArt>();
+            TableValue = SqlService.UnitSQL.GetUnitArt(_setting.user.Id);
         }
         //Методы
 
