@@ -1,18 +1,18 @@
-﻿using CRM_Nomenclatyre.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.Linq;
+using System.Data.Entity;
+
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Data.Entity;
+
+using Test2.Models;
 
 
-namespace CRM_Nomenclatyre.Servises
+namespace Test2.Servises
 {
     public static class SqlService
     {
@@ -26,7 +26,7 @@ namespace CRM_Nomenclatyre.Servises
 
         public static class TableSQL
         {
-            public static DataSet LoadSetBD(string tableName, int id)
+            public static DataSet LoadSetBDArticles(string tableName, int id)
             {
                 try
                 {
@@ -38,9 +38,9 @@ namespace CRM_Nomenclatyre.Servises
                         dataSet = new DataSet();
                         adapter.Fill(dataSet, tableName);
                         return dataSet;
-                    }              
+                    }
                 }
-               catch
+                catch
                 {
                     return null;
                 }
@@ -52,13 +52,12 @@ namespace CRM_Nomenclatyre.Servises
             }
             public static DataSet LoadSetBD(List<string> tableNames)
             {
-/*                try
-                {*/
+                try
+                {
                     using (conn = new SqlConnection(connect))
                     {
-
-                    dataSet = new DataSet();
-                    foreach (var table in tableNames)
+                        dataSet = new DataSet();
+                        foreach (var table in tableNames)
                         {
                             adapter = new SqlDataAdapter($"Select * from {table}", conn);
                             SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
@@ -68,7 +67,7 @@ namespace CRM_Nomenclatyre.Servises
 
                         return dataSet;
                     }
-/*                }
+                }
                 catch
                 {
                     return null;
@@ -77,7 +76,7 @@ namespace CRM_Nomenclatyre.Servises
                 {
                     if (conn != null || conn.State == ConnectionState.Open) conn.Close();
 
-                }*/
+                }
             }
             public static void UpDateBD(string tableName,DataSet dataSet)
             {
@@ -134,7 +133,6 @@ namespace CRM_Nomenclatyre.Servises
                             Logistics = 0,
                             Comission=result.NameValue,
                         });
-
                         db.SaveChanges();
 
                     }
@@ -208,7 +206,18 @@ namespace CRM_Nomenclatyre.Servises
             }
 
         }
+        public static class UnitSQL
+        {
+            public static List<UnitArt> GetUnits(int id)
+            {
+                using (var db = new Context())
+                {
 
+                    return db.DbUnitArts.Include(u => u.Article).Where(m => m.Article.ManagerId == id).ToList();
+
+                }
+            }
+        }
         public static class DirectorySQL
         {
             public static List<TypeTovar> GetTypeTovar()

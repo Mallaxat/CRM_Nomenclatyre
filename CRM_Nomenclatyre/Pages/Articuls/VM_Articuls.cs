@@ -116,11 +116,13 @@ namespace CRM_Nomenclatyre.Pages
 
             TypeList = SqlService.DirectorySQL.GetTypeTovar();
             SetNums();
+            ListDataTable.TableNewRow -= SetNums;
+            ListDataTable.TableNewRow += SetNums;
 
             cUpdate = new RelayCommand(_ =>
-            {
-                UpdateDataSet();
-            });
+                        {
+                            UpdateDataSet();
+                        });
 
             cNext = new RelayCommand(_ =>
             {
@@ -163,6 +165,24 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
+        private void SetNums(object sender, DataTableNewRowEventArgs e)
+        {
+            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Barcod.ToString()))
+            {
+                ListDataTable.Columns[TabNameArticle.Barcod.ToString()].DefaultValue = mSettings.Rand(12);
+            }
+
+            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Articul.ToString()))
+            {
+                ListDataTable.Columns[TabNameArticle.Articul.ToString()].DefaultValue = mSettings.Rand(5, false);
+            }
+
+            if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.ManagerId.ToString()))
+            {
+                ListDataTable.Columns[TabNameArticle.ManagerId.ToString()].DefaultValue = _setting.user.Id;
+            }
+
+        }
         private void SetNums()
         {
             if (ListDataTable != null && ListDataTable.Columns.Contains(TabNameArticle.Barcod.ToString()))
