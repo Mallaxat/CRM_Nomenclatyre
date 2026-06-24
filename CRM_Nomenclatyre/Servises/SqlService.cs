@@ -1,15 +1,17 @@
 ﻿using CRM_Nomenclatyre.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.Linq;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
-using System.Data.Entity;
 
 
 namespace CRM_Nomenclatyre.Servises
@@ -211,7 +213,7 @@ namespace CRM_Nomenclatyre.Servises
 
         public static class UnitSQL
         {
-            public static List<UnitArt> GetUnitArt(int id)
+/*            public static List<UnitArt> GetUnitArt(int id)
             {
                 using (var db = new Context())
                 {
@@ -219,10 +221,41 @@ namespace CRM_Nomenclatyre.Servises
                     return db.DbUnitArts.Include(u => u.Article).Where(m => m.Article.ManagerId == id).ToList();
 
                 }
+            }*/
+            public static ObservableCollection<UnitArt> GetUnitArt(int id)
+            {
+                using (var db = new Context())
+                {
+                    List<UnitArt> list= db.DbUnitArts.Include(u => u.Article).Where(m => m.Article.ManagerId == id).ToList();
+                    ObservableCollection<UnitArt> result = new ObservableCollection<UnitArt>(list);
+                    return result;
+                }
             }
 
-            
+            public static void UpdateUnitArt(ObservableCollection<UnitArt> list)
+            {
+                using (var db = new Context())
+                {
+                    foreach (var item in list)
+                    {
+                        item.CountProfit();
+                        var exist = db.DbUnitArts.Any(x=>x.Id==item.Id);
 
+                        if(!exist)
+                        {
+                            db.DbUnitArts.AddOrUpdate(item);
+                        }
+                        else
+                        {
+                            var res= db.DbUnitArts.Find(item.Id);
+                            //Entry() получить информацию об объекте
+                            db.Entry(res).CurrentValues.SetValues(item);
+                        }
+                    }
+
+                    db.SaveChanges();
+                }
+            }
         }
 
 

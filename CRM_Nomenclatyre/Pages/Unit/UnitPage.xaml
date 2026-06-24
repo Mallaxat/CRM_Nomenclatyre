@@ -26,19 +26,26 @@
                   Grid.Column="1" Grid.Row="1" 
                   SelectedItem="{Binding SelectRow}"
                   ItemsSource="{Binding TableValue}"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  CanUserDeleteRows="False" 
+                  CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Предмет" Binding="{Binding Articles.Named, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Предмет" Binding="{Binding Articles.TypeTovar.Name, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="ID" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" />
-                <DataGridTextColumn Header="Себестоимость" Binding="{Binding CostPrice, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Цена" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Логистика" Binding="{Binding Logistics, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Комиссия" Binding="{Binding Comission, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Предмет" Binding="{Binding Article.Named, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Предмет" Binding="{Binding Article.TypeTovar.Name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Себестоимость" Binding="{Binding CostPrice, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"/>
+                <DataGridTextColumn Header="Логистика" Binding="{Binding Logistics, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"/>
+                <DataGridTextColumn Header="Комиссия" Binding="{Binding Comission, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:P0}}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Прибыль" Binding="{Binding Profit, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}" IsReadOnly="True" />
             </DataGrid.Columns>
-            
-            
+
+
         </DataGrid>
+        <Button Grid.Column="1" 
+                Content="обновить" Margin="0,60,0,0" 
+                HorizontalAlignment="Left" VerticalAlignment="Top" 
+                Command="{Binding cUpdate}"/>
+        
 
     </Grid>
 </Page>

@@ -2,6 +2,7 @@
 using CRM_Nomenclatyre.Servises;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Linq;
@@ -10,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace CRM_Nomenclatyre.Pages
 { 
@@ -18,32 +20,9 @@ namespace CRM_Nomenclatyre.Pages
         //Свойства
         public mSettings _setting {  get; set; }
 
-        private DataSet _listDataSet;
-        public DataSet ListDataSet
-        {
-            get => _listDataSet;
-            set
-            {
-                if (value == null) return;
-                _listDataSet = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DataTable _listDataTabe;
-        public DataTable ListDataTable
-        {
-            get => _listDataTabe;
-            set
-            {
-                if (value == null) return;
-                _listDataTabe = value;
-                OnPropertyChanged();
-            }
-        }
         
-        private List<UnitArt> tableValue;
-        public List<UnitArt> TableValue
+        private ObservableCollection<UnitArt> tableValue;
+        public ObservableCollection<UnitArt> TableValue
         {
             get => tableValue;
             set
@@ -67,7 +46,7 @@ namespace CRM_Nomenclatyre.Pages
         }
 
         //Команды
-
+        public ICommand cUpdate { get; }
 
         //Конструктор
         public VM_Unit(mSettings Setting)
@@ -76,6 +55,11 @@ namespace CRM_Nomenclatyre.Pages
       
             TableValue = SqlService.UnitSQL.GetUnitArt(_setting.user.Id);
             TypeTovar();
+
+            cUpdate = new RelayCommand(_ =>
+            {
+                Update();
+            });
         }
         //Методы
 
@@ -87,15 +71,28 @@ namespace CRM_Nomenclatyre.Pages
 
             foreach(var item in TableValue)
             {
-
                 item.Article.TypeTovar=com.Find(x=>x.Id==item.Article.TypeTovarID);
-                int i2 = 0;
             }
 
         }
 
+        public void Update()
+        {
+            foreach (var item in TableValue)
+            {
+                item.CountProfit();
+                OnPropertyChanged("TableValue");
+            }
 
-
+            SqlService.UnitSQL.UpdateUnitArt(TableValue);
+            RefreshTab();
+        }
+        public void RefreshTab()
+        {
+            TableValue.Clear();
+            TableValue = SqlService.UnitSQL.GetUnitArt(_setting.user.Id);
+            TypeTovar();
+        }
 
         //Интерфейс
         public event PropertyChangedEventHandler PropertyChanged;

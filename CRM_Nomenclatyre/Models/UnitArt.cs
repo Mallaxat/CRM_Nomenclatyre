@@ -24,14 +24,16 @@ namespace CRM_Nomenclatyre.Models
         public decimal Logistics { get; set; }
         public decimal Comission { get; set; }
 
-        public decimal Profit {
-            get => field; 
-            set
-            {
-                field = Price - CostPrice - Logistics - (Price * Comission);
-            }
-        }
-        
+        public decimal Profit { get; set; }
+
         public virtual Articles Article { get; set; }
+
+        public decimal CountProfit()
+        {
+            Profit = Price - CostPrice - Logistics - (Price * Comission);
+            return Profit;
+        }
+
+
     }
 }
