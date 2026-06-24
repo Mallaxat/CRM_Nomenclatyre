@@ -16,6 +16,10 @@ using System.Windows.Documents;
 
 namespace CRM_Nomenclatyre.Servises
 {
+    public enum SQLprocedure
+    {
+        BEST_ART, WORST_ART, MAXPRICE, MINPRICE, HIGH_EXPENSE_ART, LOW_EXPENSE_ART
+    }
     public static class SqlService
     {
         private static DataTable dataTable;
@@ -25,6 +29,66 @@ namespace CRM_Nomenclatyre.Servises
 
         private const string CONNECT = "DB_MarketplaceMain";
         private static string connect = ConfigurationManager.ConnectionStrings[CONNECT].ConnectionString;
+
+        public static class Procedure
+        {      
+            public static ObservableCollection<UnitArt> ResultProcedure(SQLprocedure proc,int id, int TypeTovarId = -1)
+            {
+                using (SqlConnection con = new SqlConnection(connect))
+                {
+                    ObservableCollection<UnitArt> result = new ObservableCollection<UnitArt>();
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(proc.ToString(), con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@UserId", id);
+                    cmd.Parameters.AddWithValue("@TypeTovarId", TypeTovarId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<TypeTovar> tovars = SqlService.DirectorySQL.GetTypeTovar();
+
+                    while (reader.Read())
+                    {
+                        Articles art = null;
+                        if (TypeTovarId == -1)
+                        {
+                            int typetovar = Convert.ToInt32(reader["TypeTovarID"]);
+                            TypeTovar buf = tovars.Find(x => x.Id == typetovar);
+                            art = new Articles
+                            {
+                                Named = reader["Named"].ToString(),
+                                TypeTovarID = typetovar,
+                                TypeTovar = tovars.Find(x => x.Id == typetovar)
+                            };
+                        }
+                        else
+                        {
+                            art = new Articles
+                            {
+                                Named = reader["Named"].ToString(),
+                                TypeTovar = tovars.Find(x => x.Id == TypeTovarId)
+                            };
+                        }
+
+
+                        result.Add(new UnitArt
+                        {
+                            CostPrice = Convert.ToDecimal(reader["CostPrice"]),
+                            Price = Convert.ToDecimal(reader["Price"]),
+                            Logistics = Convert.ToDecimal(reader["Logistics"]),
+                            Comission = Convert.ToDecimal(reader["Comission"]),
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Profit = Convert.ToDecimal(reader["Profit"]),
+                            Article = art
+                        });
+                    }
+
+                    return result;
+                }
+            }
+
+
+        }
 
         public static class TableSQL
         {
@@ -213,15 +277,6 @@ namespace CRM_Nomenclatyre.Servises
 
         public static class UnitSQL
         {
-/*            public static List<UnitArt> GetUnitArt(int id)
-            {
-                using (var db = new Context())
-                {
-
-                    return db.DbUnitArts.Include(u => u.Article).Where(m => m.Article.ManagerId == id).ToList();
-
-                }
-            }*/
             public static ObservableCollection<UnitArt> GetUnitArt(int id)
             {
                 using (var db = new Context())

@@ -45,7 +45,26 @@
                 Content="обновить" Margin="0,60,0,0" 
                 HorizontalAlignment="Left" VerticalAlignment="Top" 
                 Command="{Binding cUpdate}"/>
-        
+        <ComboBox Grid.Column="1" 
+                  ItemsSource="{Binding typeTovars}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding SelectType }"
+                  HorizontalAlignment="Left" 
+                  Margin="350,29,0,0" 
+                  VerticalAlignment="Top" Width="120"/>
+        <ComboBox Grid.Column="1" 
+                  ItemsSource="{Binding ProcCommand}"
+                  SelectedIndex="{Binding SelectProcCommand, UpdateSourceTrigger=PropertyChanged}"
+                  HorizontalAlignment="Left" 
+                  Margin="350,58,0,0" VerticalAlignment="Top" Width="120" Height="24"/>
+        <Button Grid.Column="1" 
+                Content="старт" Command="{Binding cFilterStart}"
+                HorizontalAlignment="Left" Margin="281,51,0,0" VerticalAlignment="Top"/>
+        <Button Grid.Column="1" 
+            Content="стоп" Command="{Binding cFilterStop}"
+            HorizontalAlignment="Left" Margin="281,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.768,-0.691" Height="19" Width="46"/>
+
 
     </Grid>
 </Page>
