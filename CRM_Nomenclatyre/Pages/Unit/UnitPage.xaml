@@ -28,6 +28,8 @@
                   ItemsSource="{Binding TableValue}"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Предмет" Binding="{Binding Articles.Named, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="Предмет" Binding="{Binding Articles.TypeTovar.Name, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="ID" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Себестоимость" Binding="{Binding CostPrice, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>

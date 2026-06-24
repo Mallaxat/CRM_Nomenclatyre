@@ -66,15 +66,36 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
-        //Команда
+        //Команды
+
 
         //Конструктор
         public VM_Unit(mSettings Setting)
         {
             this._setting = Setting;
+      
             TableValue = SqlService.UnitSQL.GetUnitArt(_setting.user.Id);
+            TypeTovar();
         }
         //Методы
+
+        private void TypeTovar ()
+        {
+            List<TypeTovar> com = SqlService.DirectorySQL.GetTypeTovar();
+
+            int i = 0;
+
+            foreach(var item in TableValue)
+            {
+
+                item.Article.TypeTovar=com.Find(x=>x.Id==item.Article.TypeTovarID);
+                int i2 = 0;
+            }
+
+        }
+
+
+
 
         //Интерфейс
         public event PropertyChangedEventHandler PropertyChanged;
