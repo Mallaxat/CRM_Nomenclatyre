@@ -30,7 +30,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="ButtonBorder"
                                 Property="Background"
-                                Value="White"/>
+                                Value="#2b3b4c"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

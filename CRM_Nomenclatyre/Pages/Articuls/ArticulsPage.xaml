@@ -92,7 +92,7 @@
     
                 <DataGridTextColumn Header="Номенклатура" Binding="{Binding Articul, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 
-                <DataGridComboBoxColumn Header="Товар"
+                <DataGridComboBoxColumn Header="Товар" CanUserSort="False"
                                         ItemsSource="{Binding Source={StaticResource TypeListSource}}"
                                         DisplayMemberPath="Name"
                                         SelectedValuePath="Id"
