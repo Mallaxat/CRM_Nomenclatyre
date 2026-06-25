@@ -149,6 +149,18 @@
       <DependentUpon>RegistrWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Registr\VM_Registr.cs" />
+    <Page Include="Assets\Style\ButtonBlueStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Assets\Style\ButtonNavStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Assets\Style\LabelWhiteStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Articuls\ArticulsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -253,7 +265,21 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Main_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Windows\Login\Main_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Windows\Main\Art.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Art.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Unit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

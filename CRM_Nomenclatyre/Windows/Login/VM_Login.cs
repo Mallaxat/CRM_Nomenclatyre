@@ -75,9 +75,9 @@ namespace CRM_Nomenclatyre.Windows
                 Password = _password
             };
 
-            userNow=SqlService.UserSQL.GetFullUser(userNow);
             if (Logging.IsLogin(userNow))
             {
+                userNow = SqlService.UserSQL.GetFullUser(userNow);
                 _setting.user= userNow;
                 _setting.serviseMessege.Show("Вход успешный", "Вход");
                 VM_Main main = VM_Main.Initialize(_setting);

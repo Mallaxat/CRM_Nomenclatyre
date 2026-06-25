@@ -80,13 +80,20 @@ namespace CRM_Nomenclatyre.Windows.Registr
         public void Regist()
         {
            Users userNow = AddUser();
-
-            if (Logging.IsRegist(userNow))
+            try
             {
-                _setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
+                if (Logging.IsRegist(userNow))
+                {
+                    _setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
 
+                }
+                else _setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");
             }
-            else _setting.serviseMessege.Show("Пользователь уже существует!", "Регистрация");
+            catch(Exception ex) 
+            {
+                _setting.serviseMessege.Show(ex.Message, "Ошибка регистрации");
+            }
+
 
         }
 

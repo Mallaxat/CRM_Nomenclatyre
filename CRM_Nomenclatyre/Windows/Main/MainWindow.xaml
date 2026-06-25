@@ -5,20 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM_Nomenclatyre.Windows"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        d:DesignWidth="100"
+        d:DesignHeight="100"
+        Background="#2b3b4c"  
+        Icon="/Windows/Login/Main_icon.png"
+        Title="CRM-Market" MinHeight="650" MinWidth="1000" 
+        Height="auto" Width="auto">
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Assets/Style/ButtonNavStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
     <Grid>
        <!--#region -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="13*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
+        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+              Background="#4E82B9"
+              ClipToBounds="True">
+            <!--#region -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <!--#endregion-->
+            <Button x:Name="bt_pageArt"
+                    Grid.Row="1"
+                    Style="{StaticResource ButtonNavStyle}"
+                    Command="{Binding cPageArt}">
+                <Image Source="/Assets/Art.png"
+                    Stretch="Uniform"/>
+            </Button>
+
+            <Button x:Name="bt_pageUnitArt"
+                    Grid.Row="2" 
+                    Style="{StaticResource ButtonNavStyle}"
+                    Command="{Binding cPageUnitArt}">
+                <Image Source="/Assets/Unit.png"
+                 Stretch="Uniform"/>
+            </Button>
+
+        </Grid>
+        
         <Frame x:Name="Main_Frame" 
                Grid.Column="1" Grid.Row="1"
                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"

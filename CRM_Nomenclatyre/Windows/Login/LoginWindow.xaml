@@ -5,48 +5,86 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM_Nomenclatyre.Windows"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
+        Title="Вход" MinHeight="500" MinWidth="500"
+        Background="#2b3b4c" SizeToContent="WidthAndHeight" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Icon="/Windows/Login/Main_icon.png">
     <Grid>
         <!--#region -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="2*"/>
-
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="2*"/>
-
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
 
-        <StackPanel Grid.Row="1" Grid.Column="1" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Label  Content="Логин"/>
-            <Label Content="Пароль
-                   "/>
-        </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" 
-                  HorizontalAlignment="Right" VerticalAlignment="Top">
-            <TextBox x:Name="text_Login" Grid.Column="1"
-                 TextWrapping="Wrap" Text="{Binding Login}" />
-            <PasswordBox x:Name="text_Password" Password="1"/>
-        </StackPanel>
+        <Grid Grid.Column="1" Grid.Row="1" >
+            <!--#region -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <!--#endregion-->
 
-       
-        <StackPanel Grid.Row="1" Grid.Column="1" 
-                    HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Label  Content="Логин"
+                    Grid.Column="0" Grid.Row="1" 
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" 
+                    FontFamily="Bahnschrift" FontWeight="SemiBold" 
+                    Foreground="White" FontSize="24"/>
+            <TextBox x:Name="text_Login" 
+                    Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" 
+                    TextWrapping="Wrap" Margin="5,10,5,10"
+                    Text="{Binding Login}" FontSize="24" />
 
-            <Button Content="Регистрация" x:Name="bt_registration"
-                Command="{Binding cRegistration}"/>
 
+            <Label Content="Пароль"                   
+                    Grid.Column="0" Grid.Row="3" 
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center"
+                    FontFamily="Bahnschrift" FontWeight="SemiBold"
+                    FontSize="24"
+                    Foreground="White"/>
+            
+            <PasswordBox x:Name="text_Password" 
+                    Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"
+                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    Margin="5,10,5,10" FontSize="24"/>
+
+            <Button Content="Регистрация" x:Name="bt_registration" 
+                    Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5" 
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    FontFamily="Bahnschrift" FontWeight="SemiBold"  
+                    Foreground="#212e3c" Margin="5,0,5,0"
+                    FontSize="24"
+                    Command="{Binding cRegistration}"/>
+            
             <Button Content="Вход" x:Name="bt_login"
-                Command="{Binding cLogin}" Click="bt_login_Click"/>
-        </StackPanel>
-
+                    Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="7" 
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    FontFamily="Bahnschrift" FontWeight="SemiBold"  
+                    Foreground="#212e3c" Margin="5,0,5,0"
+                    FontSize="24"
+                    Command="{Binding cLogin}" Click="bt_login_Click"/>
+ 
+        </Grid>
 
     </Grid>
 </Window>

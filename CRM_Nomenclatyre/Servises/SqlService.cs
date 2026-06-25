@@ -241,13 +241,19 @@ namespace CRM_Nomenclatyre.Servises
             }
             public static bool AddUser(Users user)
             {
-                using (var db = new Context())
+                try
                 {
-                    db.DbUsers.Add(user);
-                    db.SaveChanges();
-                    return FindUser(user);
+                    using (var db = new Context())
+                    {
+                        db.DbUsers.Add(user);
+                        db.SaveChanges();
+                        return FindUser(user);
+                    }
                 }
-                  
+                catch
+                {
+                    throw new Exception("Заполнены не все поля");
+                }   
             }
 
         }

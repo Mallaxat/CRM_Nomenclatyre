@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CRM_Nomenclatyre.Windows
 {
@@ -33,12 +34,25 @@ namespace CRM_Nomenclatyre.Windows
 
 
         //Команды
+        public ICommand cPageArt { get; }
+        public ICommand cPageUnitArt { get; }
 
         //Коснтруктор
         private VM_Main(mSettings _setting) 
         { 
             this._setting = _setting;
             CurrentPage = _setting.serviseWindow.PageOpen<VM_Articuls, ArticulsPage>(_setting);
+            cPageArt = new RelayCommand(_ =>
+            {
+                //VM_Main main = VM_Main.Initialize(_setting);
+                //CurrentPage=_setting.serviseWindow.PageOpen<VM_Unit, UnitPage>(_setting);
+                CurrentPage = _setting.serviseWindow.PageOpen<VM_Articuls, ArticulsPage>(_setting);
+            });
+            cPageUnitArt = new RelayCommand(_ =>
+            {
+                //VM_Main main = VM_Main.Initialize(_setting);
+                CurrentPage =_setting.serviseWindow.PageOpen<VM_Unit, UnitPage>(_setting);       
+            });
         }
 
         //Методы
