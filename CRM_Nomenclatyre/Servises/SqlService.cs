@@ -197,7 +197,6 @@ namespace CRM_Nomenclatyre.Servises
                     // если не нашел такой юнит
                     if (!db.DbUnitArts.Any(x => x.Id == id))
                     {
-
                         db.DbUnitArts.Add(new UnitArt
                         {
                             Id = id,

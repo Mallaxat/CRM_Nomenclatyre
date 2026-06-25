@@ -140,17 +140,22 @@ namespace CRM_Nomenclatyre.Pages
         {
             List<string> list = new List<string> { TABLENAME, TABLENAME2 };
             ListDataSet = SqlService.TableSQL.LoadSetBD(list);
-            DataTable buf = ListDataSet.Tables[0];
-            var rows = buf.AsEnumerable().Where(row => row.Field<int>("ManagerId") == _setting.user.Id);
-            ListDataTable = rows.Any()? rows.CopyToDataTable(): buf.Clone();
+
+
+            ListDataTable = ListDataSet.Tables[TABLENAME];
+            ListDataTable.DefaultView.RowFilter =
+                $"ManagerId = {_setting.user.Id}";
 
             ListArticles = SqlService.ArticulSQL.GetArticuls(_setting.user.Id);
             TypeList = SqlService.DirectorySQL.GetTypeTovar();
+
+
         }
         private void UpdateDataSet()
         {
             SqlService.TableSQL.UpDateBD(TABLENAME, ListDataSet);
             DataTable tabUnit = ListDataSet.Tables["UnitArts"];
+
             int id = -1;
             decimal tovartype = -1;
             bool UnitIdexist = true;
@@ -158,7 +163,6 @@ namespace CRM_Nomenclatyre.Pages
             {
                 id = row.Field<int>("Id");
                 tovartype = row.Field<int>("TypeTovarID");
-
                 //Переводим к Linq и если не пустой и если айдишник равен вернет тру
                 UnitIdexist = tabUnit.AsEnumerable().Any(x => !x.IsNull("Id") && x.Field<int>("Id") == id);
 
