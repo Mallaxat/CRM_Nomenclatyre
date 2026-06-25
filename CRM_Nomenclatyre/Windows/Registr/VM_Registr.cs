@@ -82,8 +82,11 @@ namespace CRM_Nomenclatyre.Windows.Registr
            Users userNow = AddUser();
             try
             {
-                if (Logging.IsRegist(userNow))
+                bool check= Logging.FindUser(userNow);
+
+                if (!Logging.FindUser(userNow))
                 {
+                    Logging.IsRegist(userNow);
                     _setting.serviseMessege.Show("Регистрация прошла успешно!", "Регистрация");
 
                 }

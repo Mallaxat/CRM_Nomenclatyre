@@ -28,6 +28,11 @@ namespace CRM_Nomenclatyre.Servises
             return false;
         }
         
+        public static bool FindUser(Users user)
+        {
+            if (user == null) return false;
+            return SqlService.UserSQL.FindUser(user);
+        }
         public static bool IsRegist(Users user)
         { 
             return SqlService.UserSQL.AddUser(user); ;

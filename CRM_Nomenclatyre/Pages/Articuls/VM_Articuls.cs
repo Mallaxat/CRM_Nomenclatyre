@@ -97,8 +97,6 @@ namespace CRM_Nomenclatyre.Pages
 
         //Команды
         public ICommand cUpdate { get; }
-        public ICommand cNext { get; }
-
         public ICommand cFilterAdd {  get; }
         public ICommand cFilterDelete { get; }
         
@@ -116,12 +114,6 @@ namespace CRM_Nomenclatyre.Pages
                         {
                             UpdateDataSet();
                         });
-
-            cNext = new RelayCommand(_ =>
-            {
-                VM_Main main = VM_Main.Initialize(_setting);
-                main.UpdatePage(_setting.serviseWindow.PageOpen<VM_Unit, UnitPage>(_setting));
-            });
 
             cFilterAdd = new RelayCommand(_ =>
             {

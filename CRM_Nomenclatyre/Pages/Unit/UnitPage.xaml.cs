@@ -24,5 +24,17 @@ namespace CRM_Nomenclatyre.Pages
         {
             InitializeComponent();
         }
+
+        private void bt_filtrEnd_Click(object sender, RoutedEventArgs e)
+        {
+            bt_update.IsEnabled = true;
+            dg_Unit.IsReadOnly = false;
+        }
+
+        private void bt_filtr_Click(object sender, RoutedEventArgs e)
+        {
+            bt_update.IsEnabled = false;
+            dg_Unit.IsReadOnly = true;
+        }
     }
 }

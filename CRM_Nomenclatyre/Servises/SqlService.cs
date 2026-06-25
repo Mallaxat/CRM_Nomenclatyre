@@ -95,8 +95,7 @@ namespace CRM_Nomenclatyre.Servises
 
 
         }
-
-        public static class TableSQL
+           public static class TableSQL
         {
             public static DataSet LoadSetBD(string tableName, int id)
             {

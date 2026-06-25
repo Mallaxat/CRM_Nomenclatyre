@@ -6,65 +6,107 @@
       xmlns:local="clr-namespace:CRM_Nomenclatyre.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="UnitPage" Background="White">
+      Title="UnitPage" Background="#2b3b4c">
 
     <Grid>
         <!--#region -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="1*"/>
+
         </Grid.RowDefinitions>
         <!--#endregion-->
 
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            <ComboBox Grid.Column="3" Grid.Row=" 3"
+                      ItemsSource="{Binding ProcCommand}"
+                      SelectedIndex="{Binding SelectProcCommand, UpdateSourceTrigger=PropertyChanged}"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                      Margin="5,0,5,5"
+                      FontWeight="SemiBold"
+                      FontSize="20"/>
+
+            <ComboBox Grid.Column="3" Grid.Row="1"
+                      ItemsSource="{Binding typeTovars}"
+                      DisplayMemberPath="Name"
+                      SelectedValuePath="Id"
+                      SelectedValue="{Binding SelectType }"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      Margin="5,0,5,5"
+                      FontWeight="SemiBold"
+                      FontSize="20"/>
+            
+            <Button x:Name="bt_filtr" Grid.Column="2" Grid.Row="1"
+                    Content="Фильтровать" Command="{Binding cFilterStart}"
+                    FontWeight="SemiBold"
+                    FontSize="20"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                    Margin="5,0,5,5" Click="bt_filtr_Click"/>
+
+            <Button x:Name="bt_filtrEnd" Grid.Column="2" Grid.Row="3"
+                    Content="Снять фильр" Command="{Binding cFilterStop}"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    FontWeight="SemiBold" FontSize="20"
+                    Margin="5,0,5,5" Click="bt_filtrEnd_Click"/>
+
+            <Button x:Name="bt_update" Grid.Column="0" Grid.Row="3"
+                    Content="Обновить"
+                    Command="{Binding cUpdate}"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    FontWeight="SemiBold" FontSize="20"
+                    Margin="5,0,5,5"/>
+
+
+        </Grid>
         <DataGrid x:Name="dg_Unit"
                   Grid.Column="1" Grid.Row="1" 
                   SelectedItem="{Binding SelectRow}"
                   ItemsSource="{Binding TableValue}"
+                  
                   AutoGenerateColumns="False"
                   CanUserDeleteRows="False" 
-                  CanUserAddRows="False">
+                  CanUserAddRows="False"
+                  CanUserResizeColumns="False"
+                  
+                  ColumnWidth="*"  
+                  FontWeight="SemiBold" FontSize="20">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Предмет" Binding="{Binding Article.Named, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Предмет" Binding="{Binding Article.TypeTovar.Name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Себестоимость" Binding="{Binding CostPrice, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"/>
-                <DataGridTextColumn Header="Цена" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"/>
-                <DataGridTextColumn Header="Логистика" Binding="{Binding Logistics, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"/>
-                <DataGridTextColumn Header="Комиссия" Binding="{Binding Comission, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:P0}}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Прибыль" Binding="{Binding Profit, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}" IsReadOnly="True" />
+                
+                <DataGridTextColumn Header="Предмет" 
+                                    Binding="{Binding Article.Named, UpdateSourceTrigger=PropertyChanged}" 
+                                    IsReadOnly="True"/>
+                <DataGridTextColumn Header="Предмет" 
+                                    Binding="{Binding Article.TypeTovar.Name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Себестоимость" 
+                                    Binding="{Binding CostPrice, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"/>
+                <DataGridTextColumn Header="Цена" 
+                                    Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"/>
+                <DataGridTextColumn Header="Логистика" 
+                                    Binding="{Binding Logistics, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}"/>
+                <DataGridTextColumn Header="Комиссия" 
+                                    Binding="{Binding Comission, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:P0}}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Прибыль" 
+                                    Binding="{Binding Profit, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.00}}" IsReadOnly="True" />
             </DataGrid.Columns>
 
 
         </DataGrid>
-        <Button Grid.Column="1" 
-                Content="обновить" Margin="0,60,0,0" 
-                HorizontalAlignment="Left" VerticalAlignment="Top" 
-                Command="{Binding cUpdate}"/>
-        <ComboBox Grid.Column="1" 
-                  ItemsSource="{Binding typeTovars}"
-                  DisplayMemberPath="Name"
-                  SelectedValuePath="Id"
-                  SelectedValue="{Binding SelectType }"
-                  HorizontalAlignment="Left" 
-                  Margin="350,29,0,0" 
-                  VerticalAlignment="Top" Width="120"/>
-        <ComboBox Grid.Column="1" 
-                  ItemsSource="{Binding ProcCommand}"
-                  SelectedIndex="{Binding SelectProcCommand, UpdateSourceTrigger=PropertyChanged}"
-                  HorizontalAlignment="Left" 
-                  Margin="350,58,0,0" VerticalAlignment="Top" Width="120" Height="24"/>
-        <Button Grid.Column="1" 
-                Content="старт" Command="{Binding cFilterStart}"
-                HorizontalAlignment="Left" Margin="281,51,0,0" VerticalAlignment="Top"/>
-        <Button Grid.Column="1" 
-            Content="стоп" Command="{Binding cFilterStop}"
-            HorizontalAlignment="Left" Margin="281,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.768,-0.691" Height="19" Width="46"/>
 
 
+
+       
     </Grid>
 </Page>
