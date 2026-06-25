@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM_Nomenclatyre.Windows"
         mc:Ignorable="d"
-        Title="Вход" MinHeight="500" MinWidth="500"
-        Background="#2b3b4c" SizeToContent="WidthAndHeight" 
+        Title="Вход" MaxHeight="500" MaxWidth="500"
+        MinHeight="500" MinWidth="500"
+        Background="#2b3b4c"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         Icon="/Windows/Login/Main_icon.png">
     <Grid>

@@ -24,7 +24,8 @@ namespace CRM_Nomenclatyre.Servises
         public static bool IsLogin(Users user)
         {
             if(user==null) return false;
-            if (SqlService.UserSQL.FindUser(user)) return true;
+            if (SqlService.UserSQL.FindUser(user)) 
+                return true;
             return false;
         }
         

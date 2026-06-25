@@ -107,8 +107,10 @@ namespace CRM_Nomenclatyre.Pages
 
             TablSetting();
             SetNums();
+
             ListDataTable.TableNewRow -= SetNums;
             ListDataTable.TableNewRow += SetNums;
+
 
             cUpdate = new RelayCommand(_ =>
                         {

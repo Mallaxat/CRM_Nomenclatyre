@@ -45,6 +45,23 @@ namespace CRM_Nomenclatyre.Servises
 
             currentWindow.Close();
         }
+        public void WindowOpenAndCloseMin<T>() where T : Window, new()
+        {
+            T window = new T();
+            //Найти текущее активное окно
+            Window currentWindow = Application.Current.MainWindow;
+
+            //Назначаем новое активное окно
+            if (Application.Current.MainWindow == currentWindow)
+            {
+                Application.Current.MainWindow = window;
+            }
+
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            window.Show();
+
+            currentWindow.Close();
+        }
         public void WindowOpenAndClose<T>(object VM) where T : Window, new()
         {
             T window = new T()

@@ -18,11 +18,7 @@ namespace CRM_Nomenclatyre.Servises
         public readonly MessageeServise serviseMessege;
         public readonly WindowService serviseWindow;
 
-        public string Password { get; set; }
-
         public Users user;
-
-
 
         private mSettings(MessageeServise serviseMessege,WindowService serviseWindow,Users user) 
         {

@@ -61,26 +61,25 @@ namespace CRM_Nomenclatyre.Windows
 
         }
 
-
         //Методы
         
         private void exLogin()
-        {
-            OnPropertyChanged("Login");
-            OnPropertyChanged("Password");
-
+        { 
             Users userNow = new Users
             {
-                Login = _login,
-                Password = _password
+                Login = this.Login,
+                Password =this.Password
             };
+
+            bool check = Logging.IsLogin(userNow);
 
             if (Logging.IsLogin(userNow))
             {
                 userNow = SqlService.UserSQL.GetFullUser(userNow);
                 _setting.user= userNow;
+
                 _setting.serviseMessege.Show("Вход успешный", "Вход");
-                VM_Main main = VM_Main.Initialize(_setting);
+                VM_Main main = VM_Main.Initialize(_setting);   
                 _setting.serviseWindow.WindowOpenAndClose<MainWindow>(main);
             } 
             else _setting.serviseMessege.Show("Не верный логин или пароль", "Вход");

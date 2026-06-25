@@ -20,7 +20,7 @@ namespace CRM_Nomenclatyre.Windows
         //Свойства
         private static VM_Main Instanse {  get; set; }
         private mSettings _setting { get; set; }
-        private  Page сurrentPage;
+        private Page сurrentPage;
         public Page CurrentPage
         {
             get => сurrentPage;
@@ -37,6 +37,7 @@ namespace CRM_Nomenclatyre.Windows
         public ICommand cPageArt { get; }
         public ICommand cPageUnitArt { get; }
 
+        public ICommand cExit { get; }
         //Коснтруктор
         private VM_Main(mSettings _setting) 
         { 
@@ -44,14 +45,16 @@ namespace CRM_Nomenclatyre.Windows
             CurrentPage = _setting.serviseWindow.PageOpen<VM_Articuls, ArticulsPage>(_setting);
             cPageArt = new RelayCommand(_ =>
             {
-                //VM_Main main = VM_Main.Initialize(_setting);
-                //CurrentPage=_setting.serviseWindow.PageOpen<VM_Unit, UnitPage>(_setting);
                 CurrentPage = _setting.serviseWindow.PageOpen<VM_Articuls, ArticulsPage>(_setting);
             });
             cPageUnitArt = new RelayCommand(_ =>
             {
-                //VM_Main main = VM_Main.Initialize(_setting);
                 CurrentPage =_setting.serviseWindow.PageOpen<VM_Unit, UnitPage>(_setting);       
+            });
+            cExit = new RelayCommand(_ =>
+            {
+                Reset();
+                _setting.serviseWindow.WindowOpenAndCloseMin<LoginWindow>();
             });
         }
 
@@ -68,6 +71,10 @@ namespace CRM_Nomenclatyre.Windows
             OnPropertyChanged("CurrentPage");
         }
 
+        public static void Reset()
+        {
+            Instanse = null;
+        }
 
 
         //Интерфейс
@@ -76,5 +83,6 @@ namespace CRM_Nomenclatyre.Windows
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
         }
+
     }
 }

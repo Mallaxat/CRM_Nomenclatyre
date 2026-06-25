@@ -73,6 +73,13 @@
                 <Image Source="/Assets/Unit.png"
                  Stretch="Uniform"/>
             </Button>
+            <Button x:Name="bt_windowLog"
+                    Grid.Row="11" 
+                    Style="{StaticResource ButtonNavStyle}"
+                    Command="{Binding cExit}">
+                <Image Source="/Assets/Exit.png"
+                 Stretch="Uniform"/>
+            </Button>
 
         </Grid>
         
