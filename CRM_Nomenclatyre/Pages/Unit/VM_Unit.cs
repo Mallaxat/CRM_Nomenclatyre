@@ -57,7 +57,7 @@ namespace CRM_Nomenclatyre.Pages
             get => procCommand;
             set
             {
-                procCommand = new List<string> { " ","Лучшие товары", "Худшие товары", "Самая высокая цена", "Самая низкая цена","Высокие расходы","Низкие расходы","Минусовая прибыль","Прибыль" };
+                procCommand = new List<string> { " ","Лучшие товары", "Худшие товары", "Самая высокая цена", "Самая низкая цена","Высокие расходы","Низкие расходы","Минусовая прибыль","Прибыль","Больше чем","Меньше чем"};
                 OnPropertyChanged();
             }
         }
@@ -84,7 +84,16 @@ namespace CRM_Nomenclatyre.Pages
             }
         }
 
-
+        private int selectNum;
+        public int SelectNum
+        {
+            get => selectNum;
+            set
+            {
+                selectNum = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion
 
@@ -211,6 +220,16 @@ namespace CRM_Nomenclatyre.Pages
                 case 8:
                     {
                         TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.GET_PROFIT, _setting.user.Id, SelectType);
+                        break;
+                    }
+                case 9:
+                    {
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.MORE_THEN, _setting.user.Id, SelectNum, SelectType);
+                        break;
+                    }
+                case 10:
+                    {
+                        TableValue = SqlService.Procedure.ResultProcedure(SQLprocedure.LESS_THEN, _setting.user.Id, SelectNum, SelectType);
                         break;
                     }
             }

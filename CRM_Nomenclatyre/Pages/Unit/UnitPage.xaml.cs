@@ -36,5 +36,21 @@ namespace CRM_Nomenclatyre.Pages
             bt_update.IsEnabled = false;
             dg_Unit.IsReadOnly = true;
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            if (comboBox.SelectedIndex == 9 || comboBox.SelectedIndex == 10)
+            {
+                tb_nums.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                tb_nums.Visibility = Visibility.Hidden;
+            }
+
+
+        }
     }
 }

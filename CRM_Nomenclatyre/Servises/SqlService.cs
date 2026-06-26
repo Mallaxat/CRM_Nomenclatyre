@@ -22,7 +22,8 @@ namespace CRM_Nomenclatyre.Servises
         MAXPRICE, MINPRICE, 
         HIGH_EXPENSE_ART, LOW_EXPENSE_ART,
         GET_ARTICLES, 
-        GET_LOSS_PROFIT, GET_PROFIT
+        GET_LOSS_PROFIT, GET_PROFIT,
+        MORE_THEN, LESS_THEN
 
 
     }
@@ -92,7 +93,62 @@ namespace CRM_Nomenclatyre.Servises
                     return result;
                 }
             }
+            public static ObservableCollection<UnitArt> ResultProcedure(SQLprocedure proc, int id,int num, int TypeTovarId = -1)
+            {
+                List<TypeTovar> tovars = SqlService.DirectorySQL.GetTypeTovar();
 
+                using (SqlConnection con = new SqlConnection(connect))
+                {
+                    ObservableCollection<UnitArt> result = new ObservableCollection<UnitArt>();
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(proc.ToString(), con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@UserId", id);
+                    cmd.Parameters.AddWithValue("@TypeTovarId", TypeTovarId);
+                    cmd.Parameters.AddWithValue("@ProfitValue", num);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Articles art = null;
+                        if (TypeTovarId == -1)
+                        {
+                            int typetovar = Convert.ToInt32(reader["TypeTovarID"]);
+                            TypeTovar buf = tovars.Find(x => x.Id == typetovar);
+                            art = new Articles
+                            {
+                                Named = reader["Named"].ToString(),
+                                TypeTovarID = typetovar,
+                                TypeTovar = tovars.Find(x => x.Id == typetovar)
+                            };
+                        }
+                        else
+                        {
+                            art = new Articles
+                            {
+                                Named = reader["Named"].ToString(),
+                                TypeTovar = tovars.Find(x => x.Id == TypeTovarId)
+                            };
+                        }
+
+                        bool hasRows = reader.HasRows;
+                        int o = 0;
+                        result.Add(new UnitArt
+                        {
+                            CostPrice = Convert.ToDecimal(reader["CostPrice"]),
+                            Price = Convert.ToDecimal(reader["Price"]),
+                            Logistics = Convert.ToDecimal(reader["Logistics"]),
+                            Comission = Convert.ToDecimal(reader["Comission"]),
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Profit = Convert.ToDecimal(reader["Profit"]),
+                            Article = art
+                        });
+                    }
+
+                    return result;
+                }
+            }
 
         }
            public static class TableSQL
